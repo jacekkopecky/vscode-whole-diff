@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
-<style>path{fill:none;stroke:#c5c5c5;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;}</style>
-<path d="M1,1v14h14v-14z M9.5,4H12 M10.5,6H13 M10.5,8H13 M9.5,10H10 M9.5,12H12"/>
-<path style="stroke-dasharray:0 2" d="M8,3V14"/>
-<path d="M1,1v14h14v-14z M3,4H6.5 M3,6H6.5 M3,8H5"/>
-</svg>

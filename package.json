@@ -22,10 +22,7 @@
       {
         "command": "whole-diff.showWholeDiff",
         "title": "Show whole diff",
-        "icon": {
-          "light": "resources/cmd-whole-diff-light.svg",
-          "dark": "resources/cmd-whole-diff-dark.svg"
-        }
+        "icon": "$(book)"
       },
       {
         "command": "whole-diff.showWholeDiffStaged",
