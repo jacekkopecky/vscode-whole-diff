@@ -27,16 +27,9 @@
       }
     ],
     "menus": {
-      "scm/title": [
-        {
-          "when": "scmProvider == git",
-          "command": "whole-diff.showWholeDiff",
-          "group": "navigation"
-        }
-      ],
       "scm/resourceGroup/context": [
         {
-          "when": "scmProvider == git",
+          "when": "scmProvider == git && scmResourceGroup =~ /^(workingTree|index)$/",
           "command": "whole-diff.showWholeDiff",
           "group": "inline@2"
         }
