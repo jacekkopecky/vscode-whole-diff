@@ -75,7 +75,7 @@ export class WholeDiffFS implements vscode.FileSystemProvider {
     throw vscode.FileSystemError.NoPermissions("read-only file system");
   }
 
-  // events, not functional because there are no changes
+  // events, we fire an event every time the user requests a diff
   private _emitter = new vscode.EventEmitter<vscode.FileChangeEvent[]>();
 
   readonly onDidChangeFile: vscode.Event<vscode.FileChangeEvent[]> =
@@ -84,6 +84,10 @@ export class WholeDiffFS implements vscode.FileSystemProvider {
   watch(_resource: vscode.Uri): vscode.Disposable {
     // ignore, no changes
     return new vscode.Disposable(() => {});
+  }
+
+  public fireChangeEvent(uri: vscode.Uri) {
+    this._emitter.fire([{ type: vscode.FileChangeType.Changed, uri }]);
   }
 }
 

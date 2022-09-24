@@ -28,7 +28,7 @@ Currently, there are no settings.
 
 ## Known Issues
 
-None.
+The diffs don't automatically refresh when there are git changes; you have to run the command or click the button again.
 
 ## Release Notes
 

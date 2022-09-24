@@ -72,6 +72,7 @@ class WholeDiffExtension {
         uri,
         "diffViewer"
       );
+      this.diffFs.fireChangeEvent(uri);
     } catch (e) {
       console.warn("error opening whole diff", e);
       vscode.window.showErrorMessage("could not open whole diff");
