@@ -7,19 +7,48 @@
     "vscode": "^1.71.0"
   },
   "categories": [
-    "Other"
+    "SCM",
+    "Diff"
   ],
   "activationEvents": [
-    "onCommand:whole-diff.helloWorld"
+    "onCommand:whole-diff.showWholeDiff",
+    "onFileSystem:whole-diff-fs"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "whole-diff.helloWorld",
-        "title": "Hello World"
+        "command": "whole-diff.showWholeDiff",
+        "title": "Show whole diff",
+        "icon": {
+          "light": "resources/cmd-whole-diff-light.svg",
+          "dark": "resources/cmd-whole-diff-dark.svg"
+        }
       }
-    ]
+    ],
+    "menus": {
+      "scm/title": [
+        {
+          "when": "scmProvider == git",
+          "command": "whole-diff.showWholeDiff",
+          "group": "navigation"
+        }
+      ],
+      "scm/resourceGroup/context": [
+        {
+          "when": "scmProvider == git",
+          "command": "whole-diff.showWholeDiff",
+          "group": "inline@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "whole-diff.showWholeDiff",
+          "when": "!gitlens:readonly && !gitlens:untrusted && !gitlens:hasVirtualFolders && viewItem =~ /gitlens:commit\\b/",
+          "group": "inline@2"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -30,16 +59,17 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.71.0",
     "@types/glob": "^7.2.0",
     "@types/mocha": "^9.1.1",
     "@types/node": "16.x",
+    "@types/vscode": "^1.71.0",
     "@typescript-eslint/eslint-plugin": "^5.31.0",
     "@typescript-eslint/parser": "^5.31.0",
+    "@vscode/test-electron": "^2.1.5",
     "eslint": "^8.20.0",
     "glob": "^8.0.3",
     "mocha": "^10.0.0",
-    "typescript": "^4.7.4",
-    "@vscode/test-electron": "^2.1.5"
+    "prettier": "^2.7.1",
+    "typescript": "^4.7.4"
   }
 }
