@@ -104,6 +104,17 @@ async function generateDiff(uri: vscode.Uri): Promise<string> {
     throw vscode.FileSystemError.Unavailable("Whole Diff cannot find cwd");
   }
 
+  // check if vscode.git is available and if not, wait a bit
+  let gitExt: vscode.Extension<unknown> | undefined;
+  while (true) {
+    gitExt = vscode.extensions.all.find((ex) => ex.id === "vscode.git");
+    if (gitExt?.isActive) {
+      break;
+    }
+    console.log("waiting for git to activate");
+    await delay(500);
+  }
+
   if (!git) {
     git = vscode.extensions.getExtension("vscode.git")?.exports.model
       .git as Git;
@@ -141,4 +152,8 @@ function extractDiffArgs(uri: vscode.Uri): string[] {
   }
 
   throw vscode.FileSystemError.FileNotFound(`Cannot find diff for ${diffType}`);
+}
+
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
