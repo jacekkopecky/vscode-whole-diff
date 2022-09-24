@@ -2,7 +2,8 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-// copied and cut down from https://github.com/microsoft/vscode-extension-samples/blob/main/fsprovider-sample/src/fileSystemProvider.ts
+// copied and cut down from
+// https://github.com/microsoft/vscode-extension-samples/blob/main/fsprovider-sample/src/fileSystemProvider.ts
 
 import * as vscode from "vscode";
 import * as path from "path";
@@ -11,7 +12,7 @@ import { DiffType, Git } from "./types";
 
 let git: Git;
 
-export class File implements vscode.FileStat {
+class File implements vscode.FileStat {
   type: vscode.FileType;
   ctime: number;
   mtime: number;
@@ -26,8 +27,6 @@ export class File implements vscode.FileStat {
     this.size = 0;
   }
 }
-
-export type Entry = File;
 
 export class WholeDiffFS implements vscode.FileSystemProvider {
   // --- manage file metadata
@@ -93,35 +92,9 @@ function strToA(str: string): Uint8Array {
   return new Uint8Array(buf);
 }
 
-const TEST_DIFF = `diff --git a/CHANGELOG.md b/CHANGELOG.md
-index 846cdb7..797e2b5 100644
---- a/CHANGELOG.md
-+++ b/CHANGELOG.md
-@@ -4,7 +4,7 @@ Update dependencies and fix encoding issue
-
- # 1.1.14
-
--Codebase improvements
-+Codebase improvements staged
-
- # 1.1.13
-
-diff --git a/README.md b/README.md
-index 6e95877..d324668 100644
---- a/README.md
-+++ b/README.md
-@@ -10,7 +10,7 @@ A simple wrapper for [diff2html](https://github.com/rtfpessoa/diff2html) library
-
- **Note**: The file extension must be \`.diff\` or \`.patch\` to be properly loaded by VS Code.
-
--## Demo
-+## Demo sdlfkj
-
- ### Without the extension:
-`;
-
 async function generateDiff(uri: vscode.Uri): Promise<string> {
   const cwd = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+
   if (!cwd) {
     vscode.window.showErrorMessage("Whole Diff cannot find a workspace folder");
     throw vscode.FileSystemError.Unavailable("Whole Diff cannot find cwd");

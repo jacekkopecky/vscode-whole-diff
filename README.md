@@ -6,6 +6,8 @@ This extension makes it possible to view the whole diff for working tree changes
 
 todo
 
+buttons and commands in palette; you can add keyboard shortcuts to your liking
+
 <!-- Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file. -->
 
 <!-- For example if there is an image subfolder under your extension project workspace: -->

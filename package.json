@@ -12,6 +12,8 @@
   ],
   "activationEvents": [
     "onCommand:whole-diff.showWholeDiff",
+    "onCommand:whole-diff.showWholeDiffStaged",
+    "onCommand:whole-diff.showWholeDiffWorking",
     "onFileSystem:whole-diff-fs"
   ],
   "main": "./out/extension.js",
@@ -24,9 +26,23 @@
           "light": "resources/cmd-whole-diff-light.svg",
           "dark": "resources/cmd-whole-diff-dark.svg"
         }
+      },
+      {
+        "command": "whole-diff.showWholeDiffStaged",
+        "title": "Show whole diff of staged changes"
+      },
+      {
+        "command": "whole-diff.showWholeDiffWorking",
+        "title": "Show whole diff of working tree"
       }
     ],
     "menus": {
+      "commandPalette": [
+        {
+          "command": "whole-diff.showWholeDiff",
+          "when": "false"
+        }
+      ],
       "scm/resourceGroup/context": [
         {
           "when": "scmProvider == git && scmResourceGroup =~ /^(workingTree|index)$/",
