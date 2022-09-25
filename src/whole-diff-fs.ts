@@ -97,23 +97,8 @@ async function generateDiff(uri: vscode.Uri): Promise<string> {
     throw vscode.FileSystemError.Unavailable('Whole Diff cannot find cwd');
   }
 
-  // check if vscode.git is available and if not, wait a bit
-  let gitExt: vscode.Extension<GitExtension> | undefined;
-  for (let i = 0; i < 20; i += 1) {
-    gitExt = vscode.extensions.all.find((ex) => ex.id === 'vscode.git');
-    if (gitExt?.isActive) {
-      break;
-    }
-    console.log('waiting for git to activate');
-    await delay(500);
-  }
-
   if (!git) {
-    git = gitExt?.exports.model.git;
-    if (!git) {
-      await vscode.window.showErrorMessage('Whole Diff cannot find git');
-      throw vscode.FileSystemError.Unavailable('Whole Diff cannot find git');
-    }
+    git = await findGit();
   }
 
   const args = extractDiffArgs(uri);
@@ -144,6 +129,29 @@ function extractDiffArgs(uri: vscode.Uri): string[] {
   }
 
   throw vscode.FileSystemError.FileNotFound(`Cannot find diff for ${diffType}`);
+}
+
+async function findGit(): Promise<Git> {
+  if (git) return git;
+
+  // check if vscode.git is available and if not, wait a bit
+  let gitExt: vscode.Extension<GitExtension> | undefined;
+  for (let i = 0; i < 20; i += 1) {
+    gitExt = vscode.extensions.all.find((ex) => ex.id === 'vscode.git');
+    if (gitExt?.isActive) {
+      break;
+    }
+    console.log('waiting for git to activate');
+    await delay(500);
+  }
+
+  git = gitExt?.exports.model.git;
+  if (!git) {
+    await vscode.window.showErrorMessage('Whole Diff cannot find git');
+    throw vscode.FileSystemError.Unavailable('Whole Diff cannot find git');
+  }
+
+  return git;
 }
 
 function delay(ms: number): Promise<void> {
