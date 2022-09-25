@@ -1,0 +1,19 @@
+# todo:
+
+- [x] eslint, portsoc eslint config
+- [x] readme detailed description
+- [x] remove the button from Untracked changes
+- [x] svg after gitlens; light and dark
+- [ ] refactor so the code is nice
+- [x] change git.ts into something like module
+- [x] why does diff viewer not remember viewed state?
+- [x] fire file events every time I press the button
+- [x] add commands for staged and working tree diffs
+- [ ] maybe make diff viewer's loading delay configurable
+- [x] figure out how to make reload with open diffs work
+- [x] read and follow ux guidelines
+- [x] change icon to codicon book?
+- [x] publish!
+- [ ] maybe add tests?
+- [ ] gitlens push action could default to push when remote has no unpulled commits
+- [x] change waiting for git from endless loop to loop that finishes, move that to a function
