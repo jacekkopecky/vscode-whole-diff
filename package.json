@@ -4,12 +4,13 @@
   "description": "Shows the whole diff of the working tree, index, or a commit",
   "version": "0.1.0",
   "license": "MIT",
+  "publisher": "JacekKopecky",
   "engines": {
     "vscode": "^1.71.0"
   },
   "categories": [
-    "SCM",
-    "Diff"
+    "SCM Providers",
+    "Other"
   ],
   "repository": {
     "type": "git",
