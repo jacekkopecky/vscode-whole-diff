@@ -4,27 +4,34 @@ This extension makes it possible to view the whole diff for working tree changes
 
 ## Features
 
-todo
+The extension adds an icon to the "Staged Changes" and "Changes" groups which will open a diff that shows all the changes in a single diff file.
 
-buttons and commands in palette; you can add keyboard shortcuts to your liking
+![Whole Diff buttons](images/buttons-screenshot.png)
 
-<!-- Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file. -->
+The same icon is also added to GitLens Commits list, where it opens the diff for the commit.
 
-<!-- For example if there is an image subfolder under your extension project workspace: -->
+![Whole Diff buttons on commits](images/buttons-commit-screenshot.png)
 
-<!-- \!\[feature X\]\(images/feature-x.png\) -->
+With an extension like `Diff Viewer`, the diff looks like this:
 
-<!-- > Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow. -->
+![A whole diff opened](images/diff-view-screenshot.png)
+
+There are also two new commands in the command pallette:
+
+1. Show whole diff of staged changes
+2. Show whole diff of working tree
+
+You can add keyboard shortcuts to your liking for these commands.
 
 ## Requirements
 
-This extension works best together with Diff Viewer by Guilherme Caponetto.
+This extension works best together with an extension that shows a diff file graphically; I use [Diff Viewer by Guilherme Caponetto](https://marketplace.visualstudio.com/items?itemName=caponetto.vscode-diff-viewer).
 
 ## Extension Settings
 
-Let me know if you want any settings; for example to hide the icon in a context menu.
-
 Currently, there are no settings.
+
+Let me know if you want any settings; for example to hide the buttons in a context menu.
 
 ## Known Issues
 
@@ -32,8 +39,6 @@ The diffs don't automatically refresh when there are git changes; you have to ru
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
+### 0.1.0
 
 Initial working release.

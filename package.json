@@ -2,7 +2,7 @@
   "name": "whole-diff",
   "displayName": "Whole Diff",
   "description": "Shows the whole diff of the working tree, index, or a commit",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.71.0"
   },
@@ -10,6 +10,10 @@
     "SCM",
     "Diff"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jacekkopecky/vscode-whole-diff"
+  },
   "activationEvents": [
     "onCommand:whole-diff.showWholeDiff",
     "onCommand:whole-diff.showWholeDiffStaged",
