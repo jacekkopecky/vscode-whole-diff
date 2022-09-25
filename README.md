@@ -39,6 +39,4 @@ The diffs don't automatically refresh when there are git changes; you have to ru
 
 ## Release Notes
 
-### 0.1.0
-
-Initial working release.
+See [CHANGELOG.md](CHANGELOG.md)

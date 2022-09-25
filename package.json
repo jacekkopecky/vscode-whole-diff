@@ -3,6 +3,7 @@
   "displayName": "Whole Diff",
   "description": "Shows the whole diff of the working tree, index, or a commit",
   "version": "0.1.0",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.71.0"
   },
@@ -61,7 +62,9 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "package": "vsce package",
+    "vscode:prepublish": "npm run clean && npm run compile",
+    "clean": "rm -rf out",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
@@ -81,6 +84,7 @@
     "glob": "^8.0.3",
     "mocha": "^10.0.0",
     "prettier": "^2.7.1",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "vsce": "^2.11.0"
   }
 }
