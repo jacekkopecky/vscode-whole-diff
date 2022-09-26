@@ -7,3 +7,7 @@ All notable changes to the "whole-diff" extension will be documented in this fil
 - Initial release
 - 0.1.1 removes todo list from readme
 - 0.1.2 adds the changelog
+
+## [0.2.0] - 2022-09-26
+
+- fix bug where the extension wouldn't reliably find the git repository

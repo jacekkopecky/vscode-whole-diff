@@ -8,9 +8,9 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 
-import { DiffType, GitExtension, Git } from './types';
+import * as types from './types';
 
-let git: Git | undefined;
+let git: types.Git | undefined;
 
 class File implements vscode.FileStat {
   type: vscode.FileType;
@@ -90,11 +90,11 @@ function strToA(str: string): Uint8Array {
 }
 
 async function generateDiff(uri: vscode.Uri): Promise<string> {
-  const cwd = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+  const cwd = path.dirname(uri.fsPath);
 
   if (!cwd) {
-    await vscode.window.showErrorMessage('Whole Diff cannot find a workspace folder');
-    throw vscode.FileSystemError.Unavailable('Whole Diff cannot find cwd');
+    await vscode.window.showErrorMessage('Whole Diff cannot find a repository folder');
+    throw vscode.FileSystemError.Unavailable(`Whole Diff cannot find cwd for git for ${uri.fsPath}`);
   }
 
   if (!git) {
@@ -115,15 +115,15 @@ async function generateDiff(uri: vscode.Uri): Promise<string> {
 function extractDiffArgs(uri: vscode.Uri): string[] {
   const diffType = path.basename(uri.path);
 
-  if (diffType === <DiffType>'staged changes.diff') {
+  if (diffType === types.STAGED_CHANGES_DIFF) {
     return ['diff', '--cached'];
   }
 
-  if (diffType === <DiffType>'working tree.diff') {
+  if (diffType === types.WORKING_TREE_DIFF) {
     return ['diff'];
   }
 
-  const sha = diffType.match(/sha-([0-9a-fA-F]*)\.diff/)?.[1];
+  const sha = diffType.match(types.SHA_REGEX)?.[1];
   if (sha) {
     return ['diff', `${sha}~1..${sha}`];
   }
@@ -131,11 +131,11 @@ function extractDiffArgs(uri: vscode.Uri): string[] {
   throw vscode.FileSystemError.FileNotFound(`Cannot find diff for ${diffType}`);
 }
 
-async function findGit(): Promise<Git> {
+async function findGit(): Promise<types.Git> {
   if (git) return git;
 
   // check if vscode.git is available and if not, wait a bit
-  let gitExt: vscode.Extension<GitExtension> | undefined;
+  let gitExt: vscode.Extension<types.GitExtension> | undefined;
   for (let i = 0; i < 20; i += 1) {
     gitExt = vscode.extensions.all.find((ex) => ex.id === 'vscode.git');
     if (gitExt?.isActive) {

@@ -17,3 +17,5 @@
 - [ ] maybe add tests?
 - [ ] gitlens push action could default to push when remote has no unpulled commits
 - [x] change waiting for git from endless loop to loop that finishes, move that to a function
+- [ ] fix diff viewer's line clicking
+- [x] fix to work reliably with non-git files open

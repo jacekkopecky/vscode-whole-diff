@@ -1,38 +1,8 @@
-import * as cp from 'child_process';
+export const WORKING_TREE_DIFF = 'working tree.diff';
+export const STAGED_CHANGES_DIFF = 'staged changes.diff';
+export const SHA_DIFF_PREFIX = 'sha-';
+export const SHA_DIFF_POSTFIX = '.diff';
+export const SHA_REGEX = /sha-([0-9a-fA-F]*)\.diff/;
 
-export type DiffType =
-  | 'working tree.diff'
-  | 'staged changes.diff'
-  | `sha-${string}.diff`;
-
-/*
- * the types below are extracted from vscode's git extension, 1.71
- */
-
-export interface SpawnOptions extends cp.SpawnOptions {
-  input?: string,
-  encoding?: string,
-  log?: boolean,
-  cancellationToken?: unknown,
-  onSpawn?: (childProcess: cp.ChildProcess) => void,
-}
-
-export interface IExecutionResult<T extends string | Buffer> {
-  exitCode: number,
-  stdout: T,
-  stderr: string,
-}
-
-export interface Git {
-  exec(
-    cwd: string,
-    args: string[],
-    options?: SpawnOptions
-  ): Promise<IExecutionResult<string>>,
-}
-
-export interface GitExtension {
-  model: {
-    git: Git,
-  },
-}
+export * from './types-command-context';
+export * from './types-vscode-git';

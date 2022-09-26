@@ -1,16 +1,9 @@
 import * as vscode from 'vscode';
-import { DiffType } from './types';
+import * as path from 'path';
 import { WholeDiffFS } from './whole-diff-fs';
+import * as types from './types';
 
 export const FS_SCHEME = 'whole-diff-fs';
-
-// gleaned from runtime
-interface CommandContext {
-  id?: 'index' | 'workingTree' | 'untracked',
-  commit?: {
-    sha?: string,
-  },
-}
 
 class WholeDiffExtension {
   private diffFs: WholeDiffFS;
@@ -25,9 +18,9 @@ class WholeDiffExtension {
     return this.showWholeDiff({ id: 'workingTree' });
   };
 
-  showWholeDiff = async (context: CommandContext) => {
-    const type = getDiffType(context);
-    if (!type) {
+  showWholeDiff = async (context: types.CommandContext) => {
+    const diffPath = getDiffPath(context);
+    if (!diffPath) {
       await vscode.window.showErrorMessage(
         'Whole Diff is unclear on what to diff, where did you click it?',
       );
@@ -38,9 +31,9 @@ class WholeDiffExtension {
       return;
     }
 
-    // open the patch as a document
+    // open the diff as a document
     try {
-      const uri = vscode.Uri.parse(FS_SCHEME + ':/' + type);
+      const uri = vscode.Uri.parse(FS_SCHEME + ':' + diffPath);
       await vscode.commands.executeCommand(
         'vscode.openWith',
         uri,
@@ -54,19 +47,46 @@ class WholeDiffExtension {
   };
 }
 
-function getDiffType(context: CommandContext): DiffType | undefined {
-  // todo remove the button from untracked changes; or else, what should I do when clicked on untracked?
+function getDiffPath(context: types.CommandContext): string | undefined {
+  const type = getDiffType(context);
+  if (!type) return;
 
-  if (context.id === 'workingTree') {
-    return 'working tree.diff';
+  const repo = getDiffRepoPath(context);
+  if (!repo) return;
+
+  return path.join(repo, type);
+}
+
+function getDiffRepoPath(context: types.CommandContext): string | undefined {
+  if (types.isVSCodeGit(context)) {
+    const resourceUri = context.resourceStates[0].resourceUri;
+    console.log('resource', resourceUri);
+    const workspaceUri = vscode.workspace.getWorkspaceFolder(resourceUri);
+    console.log('workspace', workspaceUri?.uri);
+    return workspaceUri?.uri.fsPath;
   }
 
-  if (context.id === 'index') {
-    return 'staged changes.diff';
+  if (types.isGitLensCommit(context)) {
+    return context.repoPath;
   }
 
-  if (context.commit?.sha) {
-    return `sha-${context.commit?.sha}.diff`;
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  vscode.window.showErrorMessage('Whole Diff cannot find a workspace folder');
+}
+
+function getDiffType(context: types.CommandContext): string | undefined {
+  if (types.isVSCodeGit(context)) {
+    if (context.id === 'workingTree') {
+      return types.WORKING_TREE_DIFF;
+    }
+
+    if (context.id === 'index') {
+      return types.STAGED_CHANGES_DIFF;
+    }
+  }
+
+  if (types.isGitLensCommit(context)) {
+    return types.SHA_DIFF_PREFIX + context.commit.sha + types.SHA_DIFF_POSTFIX;
   }
 
   return undefined;
