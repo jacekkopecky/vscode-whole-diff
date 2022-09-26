@@ -2,7 +2,7 @@
   "name": "whole-diff",
   "displayName": "Whole Diff",
   "description": "Shows the whole diff of the working tree, index, or a commit",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "license": "MIT",
   "publisher": "JacekKopecky",
   "engines": {
