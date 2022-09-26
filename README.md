@@ -1,6 +1,6 @@
 # Whole Diff VSCode Extension
 
-This extension makes it possible to view the whole diff for working tree changes, staged changes, or a specific commit (in GitLens commits list).
+This extension makes it possible to view the whole diff for working tree changes, staged changes, or a specific commit or stash (in GitLens commits/shashes lists).
 
 ## Features
 
@@ -8,7 +8,7 @@ The extension adds an icon to the "Staged Changes" and "Changes" groups which wi
 
 ![Whole Diff buttons](images/buttons-screenshot.png)
 
-The same icon is also added to GitLens Commits list, where it opens the diff for the commit.
+The same icon is also added to GitLens Commits and Stashes lists, where it opens the diff for that commit or stash.
 
 ![Whole Diff buttons on commits](images/buttons-commit-screenshot.png)
 
