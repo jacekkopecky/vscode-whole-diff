@@ -18,12 +18,12 @@ interface GitLensCommitContext {
   commit: {
     sha: string,
   },
-  repoPath: string,
+  uri: vscode.Uri,
 }
 
 export function isGitLensCommit(arg: CommandContext): arg is GitLensCommitContext {
   const context = <Partial<GitLensCommitContext>>arg;
-  return Boolean(context.commit?.sha && context.repoPath);
+  return Boolean(context.commit?.sha && context.uri);
 }
 
 export type CommandContext = VSCodeGitContext | GitLensCommitContext | unknown;

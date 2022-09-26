@@ -11,3 +11,4 @@ All notable changes to the "whole-diff" extension will be documented in this fil
 ## [0.2.0] - 2022-09-26
 
 - fix bug where the extension wouldn't reliably find the git repository
+- 0.2.1 is an attempt to fix it on Windows

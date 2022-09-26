@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
 import { WholeDiffFS } from './whole-diff-fs';
 import * as types from './types';
 
@@ -54,20 +53,20 @@ function getDiffPath(context: types.CommandContext): string | undefined {
   const repo = getDiffRepoPath(context);
   if (!repo) return;
 
-  return path.join(repo, type);
+  return vscode.Uri.joinPath(repo, type).path;
 }
 
-function getDiffRepoPath(context: types.CommandContext): string | undefined {
+function getDiffRepoPath(context: types.CommandContext): vscode.Uri | undefined {
   if (types.isVSCodeGit(context)) {
     const resourceUri = context.resourceStates[0].resourceUri;
     console.log('resource', resourceUri);
     const workspaceUri = vscode.workspace.getWorkspaceFolder(resourceUri);
     console.log('workspace', workspaceUri?.uri);
-    return workspaceUri?.uri.fsPath;
+    return workspaceUri?.uri;
   }
 
   if (types.isGitLensCommit(context)) {
-    return context.repoPath;
+    return context.uri;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
