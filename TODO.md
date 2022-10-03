@@ -20,3 +20,5 @@
 - [ ] fix diff viewer's line clicking
 - [x] fix to work reliably with non-git files open
 - [x] add the button to stashes, too
+- [ ] try adding the button to mhutchie's Git Graph extension
+- [ ] any github issues
