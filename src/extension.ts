@@ -57,16 +57,18 @@ function getDiffPath(context: types.CommandContext): string | undefined {
 }
 
 function getDiffRepoPath(context: types.CommandContext): vscode.Uri | undefined {
-  if (types.isVSCodeGit(context)) {
-    const resourceUri = context.resourceStates[0].resourceUri;
-    console.log('resource', resourceUri);
-    const workspaceUri = vscode.workspace.getWorkspaceFolder(resourceUri);
-    console.log('workspace', workspaceUri?.uri);
-    return workspaceUri?.uri;
-  }
-
   if (types.isGitLensCommit(context)) {
     return context.uri;
+  }
+
+  if (types.isVSCodeGit(context)) {
+    const resourceUri = context.resourceStates?.[0]?.resourceUri;
+    console.log('resource', resourceUri);
+    const workspaceUri = resourceUri
+      ? vscode.workspace.getWorkspaceFolder(resourceUri)
+      : vscode.workspace.workspaceFolders?.[0];
+    console.log('workspace', workspaceUri?.uri);
+    return workspaceUri?.uri;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises

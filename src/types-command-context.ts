@@ -6,12 +6,12 @@ import * as vscode from 'vscode';
 
 interface VSCodeGitContext {
   id: 'index' | 'workingTree',
-  resourceStates: Array<{ resourceUri: vscode.Uri }>,
+  resourceStates?: Array<{ resourceUri: vscode.Uri }>,
 }
 
 export function isVSCodeGit(arg: CommandContext): arg is VSCodeGitContext {
   const context = <Partial<VSCodeGitContext>>arg;
-  return Boolean(context.id && context.resourceStates?.[0]?.resourceUri);
+  return Boolean(context.id);
 }
 
 interface GitLensCommitContext {
