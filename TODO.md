@@ -15,6 +15,6 @@
 - [x] change waiting for git from endless loop to loop that finishes, move that to a function
 - [x] fix to work reliably with non-git files open
 - [x] add the button to stashes, too
-- [.] fix diff viewer's line clicking
+- [x] fix diff viewer's line clicking
 - [ ] refactor so the code is nice
 - [ ] maybe add tests?
