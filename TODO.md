@@ -18,3 +18,5 @@
 - [x] fix diff viewer's line clicking
 - [ ] refactor so the code is nice
 - [ ] maybe add tests?
+- [ ] try adding the button to mhutchie's Git Graph extension
+- [ ] any github issues
