@@ -23,10 +23,6 @@ class WholeDiffExtension {
       await vscode.window.showErrorMessage(
         'Whole Diff is unclear on what to diff, where did you click it?',
       );
-      console.warn(
-        "whole diff doesn't know what to diff from this context",
-        context,
-      );
       return;
     }
 
@@ -85,7 +81,11 @@ function getDiffType(context: types.CommandContext): string | undefined {
   }
 
   if (types.isGitLensCommit(context)) {
-    return types.SHA_DIFF_PREFIX + context.commit.sha + types.SHA_DIFF_POSTFIX;
+    return types.SHA_DIFF_PREFIX + context.commit.sha + types.DIFF_POSTFIX;
+  }
+
+  if (types.isGitLensBranch(context)) {
+    return types.BRANCH_DIFF_PREFIX + context.branch.name + types.DIFF_POSTFIX;
   }
 
   return undefined;

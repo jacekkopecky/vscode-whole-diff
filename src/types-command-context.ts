@@ -26,4 +26,16 @@ export function isGitLensCommit(arg: CommandContext): arg is GitLensCommitContex
   return Boolean(context.commit?.sha && context.uri);
 }
 
+interface GitLensBranchContext {
+  branch: {
+    name: string,
+  },
+  uri: vscode.Uri,
+}
+
+export function isGitLensBranch(arg: CommandContext): arg is GitLensBranchContext {
+  const context = <Partial<GitLensBranchContext>>arg;
+  return Boolean(context.branch?.name && context.uri);
+}
+
 export type CommandContext = VSCodeGitContext | GitLensCommitContext | unknown;

@@ -130,6 +130,11 @@ function extractDiffArgs(uri: vscode.Uri): string[] {
     return [...baseDiff, `${sha}~1..${sha}`];
   }
 
+  const branch = diffType.match(types.BRANCH_REGEX)?.[1];
+  if (branch) {
+    return [...baseDiff, `...${branch}`];
+  }
+
   throw vscode.FileSystemError.FileNotFound(`Cannot find diff for ${diffType}`);
 }
 
