@@ -28,14 +28,12 @@ class File implements vscode.FileStat {
   }
 }
 
-const GENERIC_STAT = new File();
-
 export class WholeDiffFS implements vscode.FileSystemProvider {
   // --- manage file metadata
 
   stat(): vscode.FileStat {
-    // no specific stats
-    return GENERIC_STAT;
+    // no specific stats, pretend file created and changed now
+    return new File();
   }
 
   readDirectory(): [string, vscode.FileType][] {
@@ -46,7 +44,6 @@ export class WholeDiffFS implements vscode.FileSystemProvider {
   // --- manage file contents
 
   async readFile(uri: vscode.Uri): Promise<Uint8Array> {
-    // todo put the git stuff here
     return strToA(await generateDiff(uri));
   }
 
@@ -75,7 +72,7 @@ export class WholeDiffFS implements vscode.FileSystemProvider {
     this._emitter.event;
 
   watch(): vscode.Disposable {
-    // ignore, no changes
+    // ignore, changes are fired on all files
     return new vscode.Disposable(() => { /* ignore */ });
   }
 
