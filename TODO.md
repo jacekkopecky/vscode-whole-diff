@@ -12,7 +12,8 @@
 - [x] read and follow ux guidelines
 - [x] change icon to codicon book?
 - [x] publish!
-- [x] change waiting for git from endless loop to loop that finishes, move that to a function
+- [x] change waiting for git from endless loop to loop that finishes, move that
+      to a function
 - [x] fix to work reliably with non-git files open
 - [x] add the button to stashes, too
 - [x] fix diff viewer's line clicking
