@@ -53,7 +53,7 @@ function getDiffPath(context: types.CommandContext): string | undefined {
 }
 
 function getDiffRepoPath(context: types.CommandContext): vscode.Uri | undefined {
-  if (types.isGitLensCommit(context)) {
+  if (types.isGitLensCommitBase(context)) {
     return context.uri;
   }
 
@@ -85,7 +85,15 @@ function getDiffType(context: types.CommandContext): string | undefined {
   }
 
   if (types.isGitLensBranch(context)) {
-    return types.BRANCH_DIFF_PREFIX + context.branch.name + types.DIFF_POSTFIX;
+    return 'HEAD...' + context.branch.name + types.DIFF_POSTFIX;
+  }
+
+  if (types.isGitLensCompare(context)) {
+    return context.behind.ref1 + '..' + context.behind.ref2 + types.DIFF_POSTFIX;
+  }
+
+  if (types.isGitLensCompareDirection(context)) {
+    return context.ref1 + '...' + context.ref2 + types.DIFF_POSTFIX;
   }
 
   return undefined;

@@ -68,6 +68,11 @@
           "command": "whole-diff.showWholeDiff",
           "when": "!gitlens:readonly && !gitlens:untrusted && !gitlens:hasVirtualFolders && viewItem =~ /gitlens:stash\\b/",
           "group": "inline@2"
+        },
+        {
+          "command": "whole-diff.showWholeDiff",
+          "when": "!gitlens:readonly && !gitlens:untrusted && !gitlens:hasVirtualFolders && viewItem =~ /gitlens:compare:results\\b/",
+          "group": "inline@2"
         }
       ]
     }

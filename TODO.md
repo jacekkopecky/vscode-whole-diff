@@ -20,7 +20,7 @@
 - [ ] refactor so the code is nice
 - [ ] maybe add tests?
 - [ ] try adding the button to mhutchie's Git Graph extension
-- [ ] try adding the button to GitLens commit compare
+- [x] try adding the button to GitLens commit compare
 - [x] try adding the button to GitLens branches
 - [ ] add refresh button, inline/side-by-side toggle, ignore whitespace toggle?
 - [ ] refresh on setting change?
