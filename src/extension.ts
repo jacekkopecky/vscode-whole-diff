@@ -63,11 +63,9 @@ function getDiffRepoPath(context: types.CommandContext): vscode.Uri | undefined 
 
   if (types.isVSCodeGit(context)) {
     const resourceUri = context.resourceStates?.[0]?.resourceUri;
-    console.log('resource', resourceUri);
     const workspaceUri = resourceUri
       ? vscode.workspace.getWorkspaceFolder(resourceUri)
       : vscode.workspace.workspaceFolders?.[0];
-    console.log('workspace', workspaceUri?.uri);
     return workspaceUri?.uri;
   }
 

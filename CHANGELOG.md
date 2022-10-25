@@ -13,3 +13,9 @@ All notable changes to the "whole-diff" extension will be documented in this fil
 - fix bug where the extension wouldn't reliably find the git repository
 - 0.2.1 is an attempt to fix it on Windows
 - 0.2.2 adds the button on GitLens stashes, too
+- 0.2.3 fixes #2: opening diff through command palette
+
+## [0.3.0] - 2022-10-25
+
+- fix refresh behaviour when reopening a diff
+- use `diffEditor.ignoreTrimWhitespace` setting to ignore whitespace changes

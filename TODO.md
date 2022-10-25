@@ -24,3 +24,4 @@
 - [ ] add refresh button, inline/side-by-side toggle, ignore whitespace toggle?
 - [ ] refresh on setting change?
 - [ ] any github issues
+- [ ] make diffviewer honour the default diff inline/side-by-side toggle?

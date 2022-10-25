@@ -29,13 +29,14 @@ This extension works best together with an extension that shows a diff file grap
 
 ## Extension Settings
 
-Currently, there are no settings.
+- `diffEditor.ignoreTrimWhitespace` is used to generate whitespace-ignoring diffs (with `git diff -b`)
+- `diffviewer.outputFormat` controls whether to show side-by-side or inline diffs
 
-Let me know if you want any settings; for example to hide the buttons in a context menu.
+This extension has no settings of its own. Let me know if you want any settings; for example to hide the buttons in a context menu.
 
 ## Known Issues
 
-The diffs don't automatically refresh when there are git changes; you have to run the command or click the button again.
+The diffs don't automatically refresh when there are git or settings changes; you have to run the command or click the button again.
 
 ## Release Notes
 
