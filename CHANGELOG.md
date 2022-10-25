@@ -20,3 +20,7 @@ file.
 
 - fix refresh behaviour when reopening a diff
 - use `diffEditor.ignoreTrimWhitespace` setting to ignore whitespace changes
+
+## [0.4.0] - 2022-10-25
+
+- add whole diff on GitLens branches and comparisons

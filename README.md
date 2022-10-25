@@ -11,8 +11,9 @@ will open a diff that shows all the changes in a single diff file.
 
 ![Whole Diff buttons](images/buttons-screenshot.png)
 
-The same icon is also added to GitLens Commits and Stashes lists, where it opens
-the diff for that commit or stash.
+The same icon is also added to GitLens Commits, Stashes, and Branches lists,
+where it opens the diff for that commit, stash, or the whole branch (from the
+common ancestor with HEAD). It's also there when you compare two commits.
 
 ![Whole Diff buttons on commits](images/buttons-commit-screenshot.png)
 
