@@ -16,7 +16,11 @@
 - [x] fix to work reliably with non-git files open
 - [x] add the button to stashes, too
 - [x] fix diff viewer's line clicking
+- [x] ignore whitespace with diffEditor.ignoreTrimWhitespace setting
 - [ ] refactor so the code is nice
 - [ ] maybe add tests?
 - [ ] try adding the button to mhutchie's Git Graph extension
+- [ ] try adding the button to GitLens commit compare and branches
+- [ ] add refresh button, inline/side-by-side toggle, ignore whitespace toggle?
+- [ ] refresh on setting change?
 - [ ] any github issues

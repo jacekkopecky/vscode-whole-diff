@@ -115,17 +115,22 @@ async function generateDiff(uri: vscode.Uri): Promise<string> {
 function extractDiffArgs(uri: vscode.Uri): string[] {
   const diffType = path.basename(uri.path);
 
+  const baseDiff = ['diff'];
+  if (vscode.workspace.getConfiguration('diffEditor').get('ignoreTrimWhitespace') === true) {
+    baseDiff.push('-b');
+  }
+
   if (diffType === types.STAGED_CHANGES_DIFF) {
-    return ['diff', '--cached'];
+    return [...baseDiff, '--cached'];
   }
 
   if (diffType === types.WORKING_TREE_DIFF) {
-    return ['diff'];
+    return [...baseDiff];
   }
 
   const sha = diffType.match(types.SHA_REGEX)?.[1];
   if (sha) {
-    return ['diff', `${sha}~1..${sha}`];
+    return [...baseDiff, `${sha}~1..${sha}`];
   }
 
   throw vscode.FileSystemError.FileNotFound(`Cannot find diff for ${diffType}`);
