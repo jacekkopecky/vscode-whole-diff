@@ -28,7 +28,7 @@ class WholeDiffExtension {
 
     // open the diff as a document
     try {
-      const uri = vscode.Uri.parse(FS_SCHEME + ':' + diffPath);
+      const uri = vscode.Uri.from({ scheme: FS_SCHEME, path: diffPath });
       await vscode.commands.executeCommand(
         'vscode.openWith',
         uri,
@@ -85,7 +85,7 @@ function getDiffType(context: types.CommandContext): string | undefined {
   }
 
   if (types.isGitLensBranch(context)) {
-    return 'HEAD...' + context.branch.name + types.DIFF_POSTFIX;
+    return 'HEAD...' + encodeURIComponent(context.branch.name) + types.DIFF_POSTFIX;
   }
 
   if (types.isGitLensCompare(context)) {

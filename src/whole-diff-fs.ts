@@ -132,7 +132,7 @@ function extractDiffArgs(uri: vscode.Uri): string[] {
 
   const twoRefs = diffType.match(types.TWO_REF_REGEX)?.[1];
   if (twoRefs) {
-    return [...baseDiff, twoRefs];
+    return [...baseDiff, decodeURIComponent(twoRefs)];
   }
 
   throw vscode.FileSystemError.FileNotFound(`Cannot find diff for ${diffType}`);
