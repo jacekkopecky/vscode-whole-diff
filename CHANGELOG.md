@@ -24,5 +24,5 @@ file.
 ## [0.4.0] - 2022-10-25
 
 - add whole diff on GitLens branches and comparisons
-- 0.4.1, 0.4.2 fix handling of branches with / in the name (such as
+- 0.4.1, 0.4.3 fix handling of branches with / in the name (such as
   `bug-fix/slashes`)
