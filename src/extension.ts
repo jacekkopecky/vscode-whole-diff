@@ -89,7 +89,10 @@ function getDiffType(context: types.CommandContext): string | undefined {
   }
 
   if (types.isGitLensCompare(context)) {
-    return context.behind.ref1 + '..' + context.behind.ref2 + types.DIFF_POSTFIX;
+    return encodeURIComponent(context.behind.ref1) +
+         '..' +
+         encodeURIComponent(context.behind.ref2) +
+         types.DIFF_POSTFIX;
   }
 
   if (types.isGitLensCompareDirection(context)) {
