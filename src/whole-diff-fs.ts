@@ -78,6 +78,7 @@ export class WholeDiffFS implements vscode.FileSystemProvider {
 
   watch(): vscode.Disposable {
     // ignore, changes are fired on all files
+    console.debug('watch');
     return new vscode.Disposable(() => {
       console.debug('dispose');
       /* ignore */
@@ -86,7 +87,7 @@ export class WholeDiffFS implements vscode.FileSystemProvider {
 
   public fireChangeEvent(uri: vscode.Uri): void {
     console.debug('firing change event', uri.toString());
-    this._emitter.fire([{ type: vscode.FileChangeType.Changed, uri }]);
+    this._emitter.fire([{ get type() { console.debug('something reading type', new Error()); return vscode.FileChangeType.Changed; }, uri }]);
   }
 }
 
