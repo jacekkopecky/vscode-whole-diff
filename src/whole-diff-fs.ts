@@ -35,10 +35,12 @@ export class WholeDiffFS implements vscode.FileSystemProvider {
 
   stat(): vscode.FileStat {
     // no specific stats, pretend file created and changed now
+    console.debug('returning stat');
     return new File();
   }
 
   readDirectory(): [string, vscode.FileType][] {
+    console.debug('readDir');
     // no listing of files
     return [];
   }
@@ -46,6 +48,7 @@ export class WholeDiffFS implements vscode.FileSystemProvider {
   // --- manage file contents
 
   async readFile(uri: vscode.Uri): Promise<Uint8Array> {
+    console.debug('readFile', uri.toString());
     return strToA(await generateDiff(uri));
   }
 
@@ -75,10 +78,14 @@ export class WholeDiffFS implements vscode.FileSystemProvider {
 
   watch(): vscode.Disposable {
     // ignore, changes are fired on all files
-    return new vscode.Disposable(() => { /* ignore */ });
+    return new vscode.Disposable(() => {
+      console.debug('dispose');
+      /* ignore */
+    });
   }
 
   public fireChangeEvent(uri: vscode.Uri): void {
+    console.debug('firing change event', uri.toString());
     this._emitter.fire([{ type: vscode.FileChangeType.Changed, uri }]);
   }
 }
