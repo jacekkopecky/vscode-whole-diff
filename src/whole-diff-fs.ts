@@ -13,18 +13,16 @@ import * as types from './types';
 let git: types.Git | undefined;
 
 class File implements vscode.FileStat {
-  static _size = 0;
+  private static _size = 0;
 
   type: vscode.FileType;
   ctime: number;
   mtime: number;
   size: number;
 
-  data?: Uint8Array;
-
   constructor() {
     this.type = vscode.FileType.File;
-    this.ctime = Date.now();
+    this.ctime = 0;
     this.mtime = Date.now();
     this.size = File._size++;
   }

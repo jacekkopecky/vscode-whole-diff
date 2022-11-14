@@ -123,7 +123,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
   context.subscriptions.push(
     vscode.workspace.registerFileSystemProvider(FS_SCHEME, diffFs, {
-      isCaseSensitive: true,
+      isCaseSensitive: false,
       isReadonly: true,
     }),
   );
