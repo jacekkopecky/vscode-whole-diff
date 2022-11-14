@@ -8,6 +8,7 @@ file.
 - add whole diff on GitLens branches and comparisons
 - 0.4.1, 0.4.3 fix handling of branches with / in the name (such as
   `bug-fix/slashes`)
+- 0.4.4 trying to fix refresh (didn't work on my Windows)
 
 ## [0.3.0] - 2022-10-25
 
