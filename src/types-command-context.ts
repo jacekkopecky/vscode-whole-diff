@@ -16,6 +16,7 @@ export function isVSCodeGit(arg: CommandContext): arg is VSCodeGitContext {
 
 interface GitLensContextBase {
   uri: vscode.Uri,
+  repoPath?: string,
 }
 
 interface GitLensCommitContext extends GitLensContextBase {

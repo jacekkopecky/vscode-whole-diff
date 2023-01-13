@@ -54,7 +54,11 @@ function getDiffPath(context: types.CommandContext): string | undefined {
 
 function getDiffRepoPath(context: types.CommandContext): vscode.Uri | undefined {
   if (types.isGitLensCommitBase(context)) {
-    return context.uri;
+    if (context.repoPath) {
+      return vscode.Uri.from({ ...context.uri, path: context.repoPath });
+    } else {
+      return context.uri;
+    }
   }
 
   if (types.isVSCodeGit(context)) {

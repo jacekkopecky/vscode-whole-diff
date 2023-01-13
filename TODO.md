@@ -23,6 +23,7 @@
 - [ ] try adding the button to mhutchie's Git Graph extension
 - [x] try adding the button to GitLens commit compare
 - [x] try adding the button to GitLens branches
+- [x] try adding the button to GitLens file history
 - [ ] add refresh button, inline/side-by-side toggle, ignore whitespace toggle?
 - [ ] refresh on setting change?
 - [ ] any github issues
