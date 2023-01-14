@@ -41,7 +41,6 @@ async function generateDiff(uri: vscode.Uri): Promise<string> {
   }
 
   const args = extractDiffArgs(uri);
-  console.log(args);
   const result = await git.exec(cwd, args);
   if (result.exitCode !== 0) {
     console.warn(result);

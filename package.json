@@ -42,6 +42,16 @@
         "command": "whole-diff.refreshWholeDiff",
         "title": "Refresh the diff",
         "icon": "$(refresh)"
+      },
+      {
+        "command": "whole-diff.showWhitespace",
+        "title": "Show whitespace differences",
+        "icon": "$(whitespace~disabled)"
+      },
+      {
+        "command": "whole-diff.ignoreWhitespace",
+        "title": "Hide whitespace differences",
+        "icon": "$(whitespace)"
       }
     ],
     "menus": {
@@ -52,6 +62,14 @@
         },
         {
           "command": "whole-diff.refreshWholeDiff",
+          "when": "false"
+        },
+        {
+          "command": "whole-diff.ignoreWhitespace",
+          "when": "false"
+        },
+        {
+          "command": "whole-diff.showWhitespace",
           "when": "false"
         }
       ],
@@ -74,6 +92,16 @@
           "command": "whole-diff.refreshWholeDiff",
           "group": "navigation",
           "when": "resourceScheme == whole-diff-fs"
+        },
+        {
+          "command": "whole-diff.showWhitespace",
+          "group": "navigation@2",
+          "when": "resourceScheme == whole-diff-fs && config.diffEditor.ignoreTrimWhitespace"
+        },
+        {
+          "command": "whole-diff.ignoreWhitespace",
+          "group": "navigation@2",
+          "when": "resourceScheme == whole-diff-fs && !config.diffEditor.ignoreTrimWhitespace"
         }
       ]
     }

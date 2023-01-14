@@ -25,8 +25,7 @@
 - [ ] try adding the button to mhutchie's Git Graph extension
 - [ ] try adding the button on Paused at commit... in gitlens commits when
       rebasing
-- [ ] make whole diff honour the normal setting to ignore whitespace; can it
-      adopt the same ignore-whitespace button as normal diffs have?
+- [x] adopt the same ignore-whitespace button as normal diffs have?
 - [x] add refresh button
 - [ ] autorefresh on scm changes?
 - [ ] any github issues

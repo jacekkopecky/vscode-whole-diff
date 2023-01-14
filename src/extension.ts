@@ -54,6 +54,18 @@ class WholeDiffExtension {
 
     this.diffProvider.fireChangeEvent(uri);
   };
+
+  toggleIgnoreWhitespace = async (uri: unknown, value: boolean) => {
+    console.log('updating to', value);
+    await vscode.workspace.getConfiguration('diffEditor').update('ignoreTrimWhitespace', value);
+
+    if (uri instanceof vscode.Uri && uri.scheme === FS_SCHEME) {
+      this.diffProvider.fireChangeEvent(uri);
+    }
+  };
+
+  showWhitespace = (uri: unknown) => this.toggleIgnoreWhitespace(uri, false);
+  ignoreWhitespace = (uri: unknown) => this.toggleIgnoreWhitespace(uri, true);
 }
 
 function getDiffPath(context: types.CommandContext): string | undefined {
@@ -136,6 +148,8 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand('whole-diff.showWholeDiffStaged', ext.showWholeDiffStaged),
     vscode.commands.registerCommand('whole-diff.showWholeDiffWorking', ext.showWholeDiffWorking),
     vscode.commands.registerCommand('whole-diff.refreshWholeDiff', ext.refreshWholeDiff),
+    vscode.commands.registerCommand('whole-diff.ignoreWhitespace', ext.ignoreWhitespace),
+    vscode.commands.registerCommand('whole-diff.showWhitespace', ext.showWhitespace),
   );
 
   context.subscriptions.push(
