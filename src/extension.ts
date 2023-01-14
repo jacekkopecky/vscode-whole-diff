@@ -66,6 +66,21 @@ class WholeDiffExtension {
 
   showWhitespace = (uri: unknown) => this.toggleIgnoreWhitespace(uri, false);
   ignoreWhitespace = (uri: unknown) => this.toggleIgnoreWhitespace(uri, true);
+
+  refreshAllOpenDiffs = () => {
+    for (const tabGroup of vscode.window.tabGroups.all) {
+      for (const tab of tabGroup.tabs) {
+        const data = tab.input as { uri?: unknown };
+        if (data && typeof data === 'object') {
+          const uri = data.uri;
+          if (uri instanceof vscode.Uri && uri.scheme === FS_SCHEME) {
+            this.diffProvider.fireChangeEvent(uri);
+            console.log('refreshing', uri.toString());
+          }
+        }
+      }
+    }
+  };
 }
 
 function getDiffPath(context: types.CommandContext): string | undefined {
@@ -154,5 +169,13 @@ export function activate(context: vscode.ExtensionContext): void {
 
   context.subscriptions.push(
     vscode.workspace.registerTextDocumentContentProvider(FS_SCHEME, diffProvider),
+  );
+
+  context.subscriptions.push(
+    vscode.workspace.onDidChangeConfiguration((e) => {
+      if (e.affectsConfiguration('diffEditor.ignoreTrimWhitespace')) {
+        ext.refreshAllOpenDiffs();
+      }
+    }),
   );
 }
