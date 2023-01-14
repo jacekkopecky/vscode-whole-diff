@@ -22,6 +22,7 @@ interface GitLensContextBase {
 interface GitLensCommitContext extends GitLensContextBase {
   commit: {
     sha: string,
+    refType?: string,
   },
 }
 
@@ -55,7 +56,12 @@ function isGitLensTwoRefs(arg?: Partial<GitLensTwoRefs>): arg is GitLensTwoRefs 
 
 export function isGitLensCommit(arg: CommandContext): arg is GitLensCommitContext {
   const context = <Partial<GitLensCommitContext>>arg;
-  return Boolean(isGitLensCommitBase(arg) && context.commit?.sha);
+  return Boolean(isGitLensCommitBase(arg) && context.commit?.sha && context.commit?.refType !== 'stash');
+}
+
+export function isGitLensStash(arg: CommandContext): arg is GitLensCommitContext {
+  const context = <Partial<GitLensCommitContext>>arg;
+  return Boolean(isGitLensCommitBase(arg) && context.commit?.sha && context.commit?.refType === 'stash');
 }
 
 export function isGitLensBranch(arg: CommandContext): arg is GitLensBranchContext {

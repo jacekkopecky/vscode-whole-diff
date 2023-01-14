@@ -84,6 +84,10 @@ function getDiffType(context: types.CommandContext): string | undefined {
     }
   }
 
+  if (types.isGitLensStash(context)) {
+    return types.STASH_DIFF_PREFIX + context.commit.sha + types.DIFF_POSTFIX;
+  }
+
   if (types.isGitLensCommit(context)) {
     return types.SHA_DIFF_PREFIX + context.commit.sha + types.DIFF_POSTFIX;
   }

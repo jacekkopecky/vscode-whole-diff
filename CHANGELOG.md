@@ -10,6 +10,7 @@ file.
   `bug-fix/slashes`)
 - 0.4.4-7 fix manual refresh on windows (sorry about the slew of versions)
 - 0.4.8 add whole diff on GitLens file history
+- 0.4.9 show stashed untracked files in stash diff
 
 ## [0.3.0] - 2022-10-25
 
