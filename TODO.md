@@ -38,7 +38,7 @@
 - [ ] shorten (or make configurable somehow) diffviewer loading delay
 - [ ] make diffviewer have a reset button for the files viewed line, or view all
       button that views/unviews all
-- [ ] show untracked files in stash diffs
+- [x] show untracked files in stash diffs
 - [ ] can whole diff have some kind of "show commit information" bit? diff
       viewer may not be able to show any kind of comments, maybe it could add
       that; or there could be a button to go use git lens or something to say

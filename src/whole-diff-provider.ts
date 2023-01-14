@@ -10,81 +10,23 @@ import * as path from 'path';
 
 import * as types from './types';
 
-let git: types.Git | undefined;
-
-class File implements vscode.FileStat {
-  private static _size = 0;
-
-  type: vscode.FileType;
-  ctime: number;
-  mtime: number;
-  size: number;
-
-  constructor() {
-    this.type = vscode.FileType.File;
-    this.ctime = 0;
-    this.mtime = Date.now();
-    this.size = File._size++;
-  }
-}
-
-export class WholeDiffFS implements vscode.FileSystemProvider {
-  // --- manage file metadata
-
-  stat(): vscode.FileStat {
-    // no specific stats, pretend file created and changed now
-    return new File();
-  }
-
-  readDirectory(): [string, vscode.FileType][] {
-    // no listing of files
-    return [];
-  }
-
-  // --- manage file contents
-
-  async readFile(uri: vscode.Uri): Promise<Uint8Array> {
-    return strToA(await generateDiff(uri));
-  }
-
-  writeFile(): void {
-    throw vscode.FileSystemError.NoPermissions('read-only file system');
-  }
-
-  // --- manage files/folders
-
-  rename(): void {
-    throw vscode.FileSystemError.NoPermissions('read-only file system');
-  }
-
-  delete(): void {
-    throw vscode.FileSystemError.NoPermissions('read-only file system');
-  }
-
-  createDirectory(): void {
-    throw vscode.FileSystemError.NoPermissions('read-only file system');
+export class WholeDiffProvider implements vscode.TextDocumentContentProvider {
+  provideTextDocumentContent(uri: vscode.Uri): Promise<string> {
+    return generateDiff(uri);
   }
 
   // events, we fire an event every time the user requests a diff
-  private _emitter = new vscode.EventEmitter<vscode.FileChangeEvent[]>();
+  private _emitter = new vscode.EventEmitter<vscode.Uri>();
 
-  readonly onDidChangeFile: vscode.Event<vscode.FileChangeEvent[]> =
+  readonly onDidChange: vscode.Event<vscode.Uri> =
     this._emitter.event;
 
-  watch(): vscode.Disposable {
-    // ignore, changes are fired on all files
-    return new vscode.Disposable(() => { /* ignore */ });
-  }
-
   public fireChangeEvent(uri: vscode.Uri): void {
-    this._emitter.fire([{ type: vscode.FileChangeType.Changed, uri }]);
+    this._emitter.fire(uri);
   }
 }
 
-function strToA(str: string): Uint8Array {
-  const buf = Buffer.from(str, 'utf-8');
-  return new Uint8Array(buf);
-}
+let git: types.Git | undefined;
 
 async function generateDiff(uri: vscode.Uri): Promise<string> {
   const cwd = path.dirname(uri.fsPath);
@@ -99,6 +41,7 @@ async function generateDiff(uri: vscode.Uri): Promise<string> {
   }
 
   const args = extractDiffArgs(uri);
+  console.log(args);
   const result = await git.exec(cwd, args);
   if (result.exitCode !== 0) {
     console.warn(result);

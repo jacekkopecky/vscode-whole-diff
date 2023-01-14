@@ -1,13 +1,13 @@
 import * as vscode from 'vscode';
-import { WholeDiffFS } from './whole-diff-fs';
+import { WholeDiffProvider } from './whole-diff-provider';
 import * as types from './types';
 
 export const FS_SCHEME = 'whole-diff-fs';
 
 class WholeDiffExtension {
-  private diffFs: WholeDiffFS;
+  private diffProvider: WholeDiffProvider;
 
-  constructor(_diffFs: WholeDiffFS) { this.diffFs = _diffFs; }
+  constructor(_diffProvider: WholeDiffProvider) { this.diffProvider = _diffProvider; }
 
   showWholeDiffStaged = () => {
     return this.showWholeDiff({ id: 'index' });
@@ -34,7 +34,7 @@ class WholeDiffExtension {
         uri,
         'diffViewer',
       );
-      this.diffFs.fireChangeEvent(uri);
+      this.diffProvider.fireChangeEvent(uri);
     } catch (e) {
       console.warn('error opening whole diff', e);
       await vscode.window.showErrorMessage('could not open whole diff');
@@ -114,8 +114,8 @@ function getDiffType(context: types.CommandContext): string | undefined {
 }
 
 export function activate(context: vscode.ExtensionContext): void {
-  const diffFs = new WholeDiffFS();
-  const ext = new WholeDiffExtension(diffFs);
+  const diffProvider = new WholeDiffProvider();
+  const ext = new WholeDiffExtension(diffProvider);
 
   context.subscriptions.push(
     vscode.commands.registerCommand('whole-diff.showWholeDiff', ext.showWholeDiff),
@@ -130,9 +130,6 @@ export function activate(context: vscode.ExtensionContext): void {
   );
 
   context.subscriptions.push(
-    vscode.workspace.registerFileSystemProvider(FS_SCHEME, diffFs, {
-      isCaseSensitive: false,
-      isReadonly: true,
-    }),
+    vscode.workspace.registerTextDocumentContentProvider(FS_SCHEME, diffProvider),
   );
 }
