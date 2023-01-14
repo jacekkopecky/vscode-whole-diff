@@ -27,20 +27,22 @@
       rebasing
 - [x] adopt the same ignore-whitespace button as normal diffs have?
 - [x] add refresh button
+- [ ] refresh on setting change? (may not be worth it, got a branch)
 - [ ] autorefresh on scm changes?
 - [ ] any github issues
 - [ ] maybe add tests?
 
 ## todos that need changes in diffviewer or in diff2html
 
-- [ ] make diffviewer honour the default diff inline/side-by-side toggle?
-- [ ] add inline/side-by-side toggle, ignore whitespace toggle?
-- [ ] refresh on setting change?
-- [ ] make diffviewer honour both zoom settings I use? (vscode doesn't make that
-      easy)
-- [ ] shorten (or make configurable somehow) diffviewer loading delay
+- [ ] make diffviewer show something sensible instead of error "no diff
+      structure..."
 - [ ] make diffviewer have a reset button for the files viewed line, or view all
       button that views/unviews all
+- [ ] add inline/side-by-side toggle?
+- [ ] make diffviewer honour the default diff inline/side-by-side toggle?
+- [ ] shorten (or make configurable somehow) diffviewer loading delay
+- [ ] make diffviewer honour both zoom settings I use? (vscode doesn't make that
+      easy)
 - [ ] can whole diff have some kind of "show commit information" bit? diffviewer
       may not be able to show any kind of comments, maybe it could add that; or
       there could be a button to go use git lens or something to say something
