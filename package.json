@@ -37,12 +37,21 @@
       {
         "command": "whole-diff.showWholeDiffWorking",
         "title": "Show whole diff of working tree"
+      },
+      {
+        "command": "whole-diff.refreshWholeDiff",
+        "title": "Refresh the diff",
+        "icon": "$(refresh)"
       }
     ],
     "menus": {
       "commandPalette": [
         {
           "command": "whole-diff.showWholeDiff",
+          "when": "false"
+        },
+        {
+          "command": "whole-diff.refreshWholeDiff",
           "when": "false"
         }
       ],
@@ -58,6 +67,13 @@
           "command": "whole-diff.showWholeDiff",
           "when": "!gitlens:readonly && !gitlens:untrusted && !gitlens:hasVirtualFolders && viewItem =~ /^gitlens:(commit|branch|stash|compare:results|file)\\b/",
           "group": "inline@2"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "whole-diff.refreshWholeDiff",
+          "group": "navigation",
+          "when": "resourceScheme == whole-diff-fs"
         }
       ]
     }

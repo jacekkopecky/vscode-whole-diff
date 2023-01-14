@@ -3,6 +3,12 @@
 All notable changes to the "whole-diff" extension will be documented in this
 file.
 
+## [0.5.0] - 2023-01-14
+
+- simplify code from FileSystemProvider to TextDocumentContentProvider (should
+  work the same)
+- add a refresh button to the whole diff windows
+
 ## [0.4.0] - 2022-10-25
 
 - add whole diff on GitLens branches and comparisons

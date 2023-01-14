@@ -40,6 +40,20 @@ class WholeDiffExtension {
       await vscode.window.showErrorMessage('could not open whole diff');
     }
   };
+
+  refreshWholeDiff = (uri: unknown) => {
+    if (!(uri instanceof vscode.Uri)) {
+      console.error('requested refresh but context not a URI');
+      return;
+    }
+
+    if (uri.scheme !== FS_SCHEME) {
+      console.error('requested refresh but on a non-whole-diff URI');
+      return;
+    }
+
+    this.diffProvider.fireChangeEvent(uri);
+  };
 }
 
 function getDiffPath(context: types.CommandContext): string | undefined {
@@ -119,14 +133,9 @@ export function activate(context: vscode.ExtensionContext): void {
 
   context.subscriptions.push(
     vscode.commands.registerCommand('whole-diff.showWholeDiff', ext.showWholeDiff),
-    vscode.commands.registerCommand(
-      'whole-diff.showWholeDiffStaged',
-      ext.showWholeDiffStaged,
-    ),
-    vscode.commands.registerCommand(
-      'whole-diff.showWholeDiffWorking',
-      ext.showWholeDiffWorking,
-    ),
+    vscode.commands.registerCommand('whole-diff.showWholeDiffStaged', ext.showWholeDiffStaged),
+    vscode.commands.registerCommand('whole-diff.showWholeDiffWorking', ext.showWholeDiffWorking),
+    vscode.commands.registerCommand('whole-diff.refreshWholeDiff', ext.refreshWholeDiff),
   );
 
   context.subscriptions.push(
