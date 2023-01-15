@@ -8,7 +8,7 @@ file.
 - simplify code from FileSystemProvider to TextDocumentContentProvider (should
   work the same)
 - add a refresh button to the whole diff windows
-- 0.5.1-2 add ignore whitespace toggle button
+- 0.5.1-3 add ignore whitespace toggle button
 
 ## [0.4.0] - 2022-10-25
 

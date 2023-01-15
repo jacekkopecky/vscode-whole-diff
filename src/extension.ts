@@ -56,7 +56,6 @@ class WholeDiffExtension {
   };
 
   toggleIgnoreWhitespace = async (uri: unknown, value: boolean) => {
-    console.log('updating to', value);
     await vscode.workspace.getConfiguration('diffEditor').update('ignoreTrimWhitespace', value, true);
 
     if (uri instanceof vscode.Uri && uri.scheme === FS_SCHEME) {
