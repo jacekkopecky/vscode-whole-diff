@@ -34,13 +34,14 @@
 
 ## todos that need changes in diffviewer or in diff2html
 
-- [ ] make diffviewer show something sensible instead of error "no diff
+- [x] make diffviewer show something sensible instead of error "no diff
       structure..."
-- [ ] make diffviewer have a reset button for the files viewed line, or view all
+- [x] make diffviewer have a reset button for the files viewed line, or view all
       button that views/unviews all
-- [ ] add inline/side-by-side toggle?
-- [ ] make diffviewer honour the default diff inline/side-by-side toggle?
-- [ ] shorten (or make configurable somehow) diffviewer loading delay
+- [x] add inline/side-by-side toggle button?
+  - icon possibilities: mirror / open-preview / split-horizontal
+- [ ] shorten (or make configurable somehow) diffviewer loading delay in
+      provider.ts / updateWebview
 - [ ] make diffviewer honour both zoom settings I use? (vscode doesn't make that
       easy)
 - [ ] can whole diff have some kind of "show commit information" bit? diffviewer
