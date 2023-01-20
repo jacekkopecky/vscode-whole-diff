@@ -40,7 +40,7 @@
       button that views/unviews all
 - [x] add inline/side-by-side toggle button?
   - icon possibilities: mirror / open-preview / split-horizontal
-- [ ] shorten (or make configurable somehow) diffviewer loading delay in
+- [x] shorten (or make configurable somehow) diffviewer loading delay in
       provider.ts / updateWebview
 - [ ] make diffviewer honour both zoom settings I use? (vscode doesn't make that
       easy)
