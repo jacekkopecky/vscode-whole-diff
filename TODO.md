@@ -25,10 +25,11 @@
 - [x] try adding the button to mhutchie's Git Graph extension, maybe just at the
       top of the window, if I can find out what commit is currently selected
       there...
-- [ ] try adding the button on Paused at commit... in gitlens commits when
-      rebasing
 - [x] adopt the same ignore-whitespace button as normal diffs have?
 - [x] add refresh button
+- [x] add a way to open whole diff for a specific commit by sha (prefilled from clipboard)
+- [ ] try adding the button on Paused at commit... in gitlens commits when
+      rebasing
 - [ ] refresh on setting change? (may not be worth it, got a branch)
 - [ ] autorefresh on scm changes?
 - [ ] any github issues
@@ -39,7 +40,6 @@
 - [ ] add keybinding cmd/ctrl-r to refresh
 - [ ] add refresh + ignore/show whitespace commands to command palette, when in
       the right window?
-- [ ] add a way to open whole diff for a specific commit by sha (prefilled from clipboard)
 
 ## todos that need changes in diffviewer or in diff2html
 
