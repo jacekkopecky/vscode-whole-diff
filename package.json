@@ -33,6 +33,11 @@
         "icon": "$(book)"
       },
       {
+        "command": "whole-diff.showWholeDiffByShaImmediate",
+        "title": "Show whole diff for a given SHA (if one is in the clipboard, open don't ask for input)",
+        "icon": "$(book)"
+      },
+      {
         "command": "whole-diff.showWholeDiffStaged",
         "title": "Show whole diff of staged changes"
       },
@@ -106,7 +111,7 @@
           "when": "resourceScheme == whole-diff-fs && !config.diffEditor.ignoreTrimWhitespace"
         },
         {
-          "command": "whole-diff.showWholeDiffBySha",
+          "command": "whole-diff.showWholeDiffByShaImmediate",
           "group": "navigation",
           "when": "activeWebviewPanelId == git-graph"
         }

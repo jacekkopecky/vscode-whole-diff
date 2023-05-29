@@ -45,11 +45,17 @@ class WholeDiffExtension {
     }
   };
 
-  showWholeDiffBySha = async () => {
+  showWholeDiffByShaImmediate = async () => this.doShowWholeDiffBySha(true);
+  showWholeDiffBySha = async () => this.doShowWholeDiffBySha();
+
+  doShowWholeDiffBySha = async (immediate?: boolean) => {
     const clipboardText = await vscode.env.clipboard.readText();
     const clipboardSha = types.SHA_REGEX.test(clipboardText) ? clipboardText : '';
 
-    const shaInput = (await vscode.window.showInputBox({ placeHolder: 'enter a commit SHA', value: clipboardSha }))?.trim();
+    const shaInput = (immediate && clipboardSha)
+      ? clipboardSha
+      : (await vscode.window.showInputBox({ placeHolder: 'enter a commit SHA', value: clipboardSha }))?.trim();
+
     if (!shaInput) return;
 
     if (types.SHA_REGEX.test(shaInput)) {
@@ -172,6 +178,7 @@ export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
     vscode.commands.registerCommand('whole-diff.showWholeDiff', ext.showWholeDiff),
     vscode.commands.registerCommand('whole-diff.showWholeDiffBySha', ext.showWholeDiffBySha),
+    vscode.commands.registerCommand('whole-diff.showWholeDiffByShaImmediate', ext.showWholeDiffByShaImmediate),
     vscode.commands.registerCommand('whole-diff.showWholeDiffStaged', ext.showWholeDiffStaged),
     vscode.commands.registerCommand('whole-diff.showWholeDiffWorking', ext.showWholeDiffWorking),
     vscode.commands.registerCommand('whole-diff.refreshWholeDiff', ext.refreshWholeDiff),
