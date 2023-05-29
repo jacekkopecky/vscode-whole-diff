@@ -22,7 +22,9 @@
 - [x] try adding the button to GitLens commit compare
 - [x] try adding the button to GitLens branches
 - [x] try adding the button to GitLens file history
-- [ ] try adding the button to mhutchie's Git Graph extension
+- [x] try adding the button to mhutchie's Git Graph extension, maybe just at the
+      top of the window, if I can find out what commit is currently selected
+      there...
 - [ ] try adding the button on Paused at commit... in gitlens commits when
       rebasing
 - [x] adopt the same ignore-whitespace button as normal diffs have?
@@ -31,6 +33,13 @@
 - [ ] autorefresh on scm changes?
 - [ ] any github issues
 - [ ] maybe add tests?
+- [ ] if vscode adds workspace.registerFileSearchProvider or
+      workspace.registerTextSearchProvider, register one so diffs don't get
+      searched
+- [ ] add keybinding cmd/ctrl-r to refresh
+- [ ] add refresh + ignore/show whitespace commands to command palette, when in
+      the right window?
+- [ ] add a way to open whole diff for a specific commit by sha (prefilled from clipboard)
 
 ## todos that need changes in diffviewer or in diff2html
 
@@ -48,3 +57,8 @@
       may not be able to show any kind of comments, maybe it could add that; or
       there could be a button to go use git lens or something to say something
       about the commit...
+- [ ] in a diff of two similar files in two directories, where the diff looks
+      like the file has moved, with the diff based (and present) in a
+      subdirectory of the workspace directory, going to file links doesn't seem
+      to work
+- [ ] it looks like "stable both-edges" misplaces the line numbers on windows
