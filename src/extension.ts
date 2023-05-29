@@ -26,6 +26,10 @@ class WholeDiffExtension {
       return;
     }
 
+    return this.openDiff(diffPath);
+  };
+
+  openDiff = async (diffPath: string) => {
     // open the diff as a document
     try {
       const uri = vscode.Uri.from({ scheme: FS_SCHEME, path: diffPath });
@@ -38,6 +42,29 @@ class WholeDiffExtension {
     } catch (e) {
       console.warn('error opening whole diff', e);
       await vscode.window.showErrorMessage('could not open whole diff');
+    }
+  };
+
+  showWholeDiffBySha = async () => {
+    const clipboardText = await vscode.env.clipboard.readText();
+    const clipboardSha = types.SHA_REGEX.test(clipboardText) ? clipboardText : '';
+
+    const shaInput = (await vscode.window.showInputBox({ placeHolder: 'enter a commit SHA', value: clipboardSha }))?.trim();
+    if (!shaInput) return;
+
+    if (types.SHA_REGEX.test(shaInput)) {
+      const type = types.SHA_DIFF_PREFIX + shaInput + types.DIFF_POSTFIX;
+
+      const gitExt: vscode.Extension<types.GitExtension> | undefined = vscode.extensions.all.find((ex) => ex.id === 'vscode.git');
+      const gitUrl = gitExt?.exports.model.repositories[0]?.root;
+      if (!gitUrl) {
+        return vscode.window.showErrorMessage('Cannot find a git root');
+      }
+
+      const path = vscode.Uri.joinPath(vscode.Uri.parse(gitUrl), type).path;
+      return this.openDiff(path);
+    } else {
+      return vscode.window.showErrorMessage(`"${shaInput}" is not a recognized SHA`);
     }
   };
 
@@ -144,6 +171,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
   context.subscriptions.push(
     vscode.commands.registerCommand('whole-diff.showWholeDiff', ext.showWholeDiff),
+    vscode.commands.registerCommand('whole-diff.showWholeDiffBySha', ext.showWholeDiffBySha),
     vscode.commands.registerCommand('whole-diff.showWholeDiffStaged', ext.showWholeDiffStaged),
     vscode.commands.registerCommand('whole-diff.showWholeDiffWorking', ext.showWholeDiffWorking),
     vscode.commands.registerCommand('whole-diff.refreshWholeDiff', ext.refreshWholeDiff),

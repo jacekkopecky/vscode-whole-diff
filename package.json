@@ -104,6 +104,11 @@
           "command": "whole-diff.ignoreWhitespace",
           "group": "navigation@2",
           "when": "resourceScheme == whole-diff-fs && !config.diffEditor.ignoreTrimWhitespace"
+        },
+        {
+          "command": "whole-diff.showWholeDiffBySha",
+          "group": "navigation",
+          "when": "activeWebviewPanelId == git-graph"
         }
       ]
     }

@@ -67,7 +67,7 @@ function extractDiffArgs(uri: vscode.Uri): string[] {
     return ['diff', ...opts];
   }
 
-  const sha = diffType.match(types.SHA_REGEX)?.[1];
+  const sha = diffType.match(types.SHA_DIFF_REGEX)?.[1];
   if (sha) {
     return ['diff', ...opts, `${sha}~1..${sha}`];
   }

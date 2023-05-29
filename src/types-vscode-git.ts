@@ -29,5 +29,8 @@ export interface Git {
 export interface GitExtension {
   model: {
     git: Git,
+    repositories: {
+      root: string,
+    }[],
   },
 }
