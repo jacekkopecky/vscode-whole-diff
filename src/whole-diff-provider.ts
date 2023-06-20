@@ -54,36 +54,88 @@ async function generateDiff(uri: vscode.Uri): Promise<string> {
 function extractDiffArgs(uri: vscode.Uri): string[] {
   const diffType = path.basename(uri.path);
 
-  const opts = [];
+  const opts: string[] = [];
   if (vscode.workspace.getConfiguration('diffEditor').get('ignoreTrimWhitespace') === true) {
     opts.push('-b');
   }
 
+  // order is important here;
+  const retval =
+    extractStagedDiff(diffType, opts) ??
+    extractWorkingTreeDiff(diffType, opts) ??
+    extractShaDiff(diffType, opts) ??
+    extractStashDiff(diffType, opts) ??
+    extractTwoRefsDiff(diffType, opts) ??
+    extractWorkingTreeToRefDiff(diffType, opts) ??
+    extractRefToWorkingTreeDiff(diffType, opts) ??
+    extractWorkingTreeAndRefDiff(diffType, opts)
+    ;
+
+  if (retval) {
+    return retval;
+  } else {
+    throw vscode.FileSystemError.FileNotFound(`Cannot find diff for ${diffType}`);
+  }
+}
+
+function extractStagedDiff(diffType: string, opts: string[]) {
   if (diffType === types.STAGED_CHANGES_DIFF) {
     return ['diff', ...opts, '--cached'];
   }
+}
 
+function extractWorkingTreeDiff(diffType: string, opts: string[]) {
   if (diffType === types.WORKING_TREE_DIFF) {
     return ['diff', ...opts];
   }
-
-  const sha = diffType.match(types.SHA_DIFF_REGEX)?.[1];
-  if (sha) {
-    return ['diff', ...opts, `${sha}~1..${sha}`];
-  }
-
-  const stash = diffType.match(types.STASH_REGEX)?.[1];
-  if (stash) {
-    return ['stash', 'show', '-u', '-p', ...opts, `${stash}`];
-  }
-
-  const twoRefs = diffType.match(types.TWO_REF_REGEX)?.[1];
-  if (twoRefs) {
-    return ['diff', ...opts, decodeURIComponent(twoRefs)];
-  }
-
-  throw vscode.FileSystemError.FileNotFound(`Cannot find diff for ${diffType}`);
 }
+
+function extractShaDiff(diffType: string, opts: string[]) {
+  const match = diffType.match(types.SHA_DIFF_REGEX)?.[1];
+  if (match) {
+    return ['diff', ...opts, `${match}~1..${match}`];
+  }
+}
+
+function extractStashDiff(diffType: string, opts: string[]) {
+  const match = diffType.match(types.STASH_REGEX)?.[1];
+  if (match) {
+    return ['stash', 'show', '-u', '-p', ...opts, `${match}`];
+  }
+}
+
+function extractTwoRefsDiff(diffType: string, opts: string[]) {
+  const match = diffType.match(types.TWO_REF_REGEX)?.[1];
+  if (match) {
+    return ['diff', ...opts, decodeURIComponent(match)];
+  }
+}
+
+function extractWorkingTreeToRefDiff(diffType: string, opts: string[]) {
+  const match = diffType.match(types.WT_TO_REF_REGEX)?.[1];
+  if (match) {
+    console.log('wt to ref');
+    return ['diff', ...opts, '-R', decodeURIComponent(match)];
+  }
+}
+
+function extractRefToWorkingTreeDiff(diffType: string, opts: string[]) {
+  const match = diffType.match(types.REF_TO_WT_REGEX)?.[1];
+  if (match) {
+    console.log('ref to wt');
+    return ['diff', ...opts, decodeURIComponent(match)];
+  }
+}
+
+function extractWorkingTreeAndRefDiff(diffType: string, opts: string[]) {
+  const match = diffType.match(types.WT_AND_REF_REGEX)?.[1];
+  if (match) {
+    console.log('wt and ref todo');
+    // same as above
+    return ['diff', ...opts, decodeURIComponent(match)];
+  }
+}
+
 
 async function findGit(): Promise<types.Git> {
   if (git) return git;

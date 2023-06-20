@@ -28,10 +28,11 @@
 - [x] adopt the same ignore-whitespace button as normal diffs have?
 - [x] add refresh button
 - [x] add a way to open whole diff for a specific commit by sha (prefilled from clipboard)
+- [x] fix the button on comparison of commit against working tree
 - [ ] try adding the button on Paused at commit... in gitlens commits when
       rebasing
 - [ ] refresh on setting change? (may not be worth it, got a branch)
-- [ ] autorefresh on scm changes?
+- [ ] autorefresh on scm changes? Or show a message in the window somehow?
 - [ ] any github issues
 - [ ] maybe add tests?
 - [ ] if vscode adds workspace.registerFileSearchProvider or
@@ -57,6 +58,7 @@
       may not be able to show any kind of comments, maybe it could add that; or
       there could be a button to go use git lens or something to say something
       about the commit...
+  - got a commit in ~/foss/diff2html that starts towards this, but it doesn't feel like it's the right approach
 - [ ] in a diff of two similar files in two directories, where the diff looks
       like the file has moved, with the diff based (and present) in a
       subdirectory of the workspace directory, going to file links doesn't seem

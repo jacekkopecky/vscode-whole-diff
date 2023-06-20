@@ -11,6 +11,7 @@ file.
 - add a command whole-diff.showWholeDiffByShaImmediate like the above
   - but if there is a SHA in the clipboard, it opens the diff immediately without asking for a SHA
 - add the whole diff icon to Git Graph extension windows
+- 0.6.1 fixes behaviour on GitLens comparisons with working tree
 
 ## [0.5.0] - 2023-01-14
 

@@ -4,14 +4,18 @@
 
 import * as vscode from 'vscode';
 
+type StrArr = readonly (string|undefined)[];
+
+const VS_CODE_GIT_CONTEXT_IDS = ['index', 'workingTree'] as const;
+
 interface VSCodeGitContext {
-  id: 'index' | 'workingTree',
+  id: typeof VS_CODE_GIT_CONTEXT_IDS[number],
   resourceStates?: Array<{ resourceUri: vscode.Uri }>,
 }
 
 export function isVSCodeGit(arg: CommandContext): arg is VSCodeGitContext {
   const context = <Partial<VSCodeGitContext>>arg;
-  return Boolean(context.id);
+  return (VS_CODE_GIT_CONTEXT_IDS as StrArr).includes(context.id);
 }
 
 interface GitLensContextBase {
@@ -51,7 +55,7 @@ export function isGitLensCommitBase(arg: CommandContext): arg is GitLensContextB
 }
 
 function isGitLensTwoRefs(arg?: Partial<GitLensTwoRefs>): arg is GitLensTwoRefs {
-  return Boolean(arg?.ref1 && arg?.ref2);
+  return Boolean(arg?.ref1 != null && arg?.ref2 != null);
 }
 
 export function isGitLensCommit(arg: CommandContext): arg is GitLensCommitContext {

@@ -46,8 +46,9 @@ for example to hide the buttons in a context menu.
 
 ## Known Issues
 
-The diffs don't automatically refresh when there are git or settings changes;
+1. The diffs don't automatically refresh when there are git or settings changes;
 you have to run the command or click the button again.
+1. The extension will misbehave (not find diffs) for branches that have `.` in the name.
 
 ## Release Notes
 
