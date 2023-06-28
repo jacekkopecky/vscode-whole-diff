@@ -59,6 +59,10 @@ function extractDiffArgs(uri: vscode.Uri): string[] {
     opts.push('-b');
   }
 
+  if (vscode.workspace.getConfiguration('diffEditor').get('ignoreExternalDiff') === true) {
+    opts.push('--no-ext-diff');
+  }
+
   // order is important here;
   const retval =
     extractStagedDiff(diffType, opts) ??
