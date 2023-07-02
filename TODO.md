@@ -29,18 +29,17 @@
 - [x] add refresh button
 - [x] add a way to open whole diff for a specific commit by sha (prefilled from clipboard)
 - [x] fix the button on comparison of commit against working tree
+- [x] add refresh + ignore/show whitespace commands to command palette, when in the right window
 - [ ] try adding the button on Paused at commit... in gitlens commits when
       rebasing
 - [ ] refresh on setting change? (may not be worth it, got a branch)
 - [ ] autorefresh on scm changes? Or show a message in the window somehow?
 - [ ] any github issues
 - [ ] maybe add tests?
-- [ ] if vscode adds workspace.registerFileSearchProvider or
-      workspace.registerTextSearchProvider, register one so diffs don't get
+- [ ] if vscode adds workspace.registerFileSearchProvider #73524 or
+      workspace.registerTextSearchProvider #59921, register one so diffs don't get
       searched
-- [ ] add keybinding cmd/ctrl-r to refresh
-- [ ] add refresh + ignore/show whitespace commands to command palette, when in
-      the right window?
+- [ ] add default keybinding cmd/ctrl-r to refresh
 
 ## todos that need changes in diffviewer or in diff2html
 
@@ -52,6 +51,7 @@
   - icon possibilities: mirror / open-preview / split-horizontal
 - [x] shorten (or make configurable somehow) diffviewer loading delay in
       provider.ts / updateWebview
+- [x] it looks like "stable both-edges" misplaces the line numbers on windows
 - [ ] make diffviewer honour both zoom settings I use? (vscode doesn't make that
       easy)
 - [ ] can whole diff have some kind of "show commit information" bit? diffviewer
@@ -63,4 +63,4 @@
       like the file has moved, with the diff based (and present) in a
       subdirectory of the workspace directory, going to file links doesn't seem
       to work
-- [ ] it looks like "stable both-edges" misplaces the line numbers on windows
+- [ ] once you press cmd-f in diffviewer, that diffviewer always has find open

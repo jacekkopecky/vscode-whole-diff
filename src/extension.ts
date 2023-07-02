@@ -74,7 +74,9 @@ class WholeDiffExtension {
     }
   };
 
-  refreshWholeDiff = (uri: unknown) => {
+  refreshWholeDiff = (context: unknown) => {
+    const uri = this.getContextOrActiveTabUri(context);
+
     if (!(uri instanceof vscode.Uri)) {
       console.error('requested refresh but context not a URI');
       return;
@@ -88,16 +90,26 @@ class WholeDiffExtension {
     this.diffProvider.fireChangeEvent(uri);
   };
 
-  toggleIgnoreWhitespace = async (uri: unknown, value: boolean) => {
+  getContextOrActiveTabUri = (context: unknown) => {
+    if (context) return context;
+
+    const activeInput = vscode.window.tabGroups.activeTabGroup.activeTab?.input;
+    if (activeInput && typeof activeInput === 'object' && ('uri' in activeInput)) {
+      return activeInput.uri;
+    }
+  };
+
+  toggleIgnoreWhitespace = async (context: unknown, value: boolean) => {
     await vscode.workspace.getConfiguration('diffEditor').update('ignoreTrimWhitespace', value, true);
 
+    const uri = this.getContextOrActiveTabUri(context);
     if (uri instanceof vscode.Uri && uri.scheme === FS_SCHEME) {
       this.diffProvider.fireChangeEvent(uri);
     }
   };
 
-  showWhitespace = (uri: unknown) => this.toggleIgnoreWhitespace(uri, false);
-  ignoreWhitespace = (uri: unknown) => this.toggleIgnoreWhitespace(uri, true);
+  showWhitespace = (context: unknown) => this.toggleIgnoreWhitespace(context, false);
+  ignoreWhitespace = (context: unknown) => this.toggleIgnoreWhitespace(context, true);
 }
 
 function getDiffPath(context: types.CommandContext): string | undefined {

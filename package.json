@@ -47,17 +47,17 @@
       },
       {
         "command": "whole-diff.refreshWholeDiff",
-        "title": "Refresh the diff",
+        "title": "Refresh whole diff",
         "icon": "$(refresh)"
       },
       {
         "command": "whole-diff.showWhitespace",
-        "title": "Show whitespace differences",
+        "title": "Show whitespace differences in whole diff",
         "icon": "$(whitespace~disabled)"
       },
       {
         "command": "whole-diff.ignoreWhitespace",
-        "title": "Hide whitespace differences",
+        "title": "Hide whitespace differences in whole diff",
         "icon": "$(whitespace)"
       }
     ],
@@ -69,15 +69,15 @@
         },
         {
           "command": "whole-diff.refreshWholeDiff",
-          "when": "false"
+          "when": "resourceScheme == whole-diff-fs"
         },
         {
           "command": "whole-diff.ignoreWhitespace",
-          "when": "false"
+          "when": "resourceScheme == whole-diff-fs && !config.diffEditor.ignoreTrimWhitespace"
         },
         {
           "command": "whole-diff.showWhitespace",
-          "when": "false"
+          "when": "resourceScheme == whole-diff-fs && config.diffEditor.ignoreTrimWhitespace"
         }
       ],
       "scm/resourceGroup/context": [
