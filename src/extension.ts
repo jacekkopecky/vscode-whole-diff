@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { WholeDiffProvider } from './whole-diff-provider';
+import { WholeDiffProvider, gitExt } from './whole-diff-provider';
 import * as types from './types';
 
 export const FS_SCHEME = 'whole-diff-fs';
@@ -71,7 +71,6 @@ class WholeDiffExtension {
     if (types.SHA_REGEX.test(shaInput)) {
       const type = types.SHA_DIFF_PREFIX + shaInput + types.DIFF_POSTFIX;
 
-      const gitExt: vscode.Extension<types.GitExtension> | undefined = vscode.extensions.all.find((ex) => ex.id === 'vscode.git');
       const gitUrl = gitExt?.exports.model.repositories[0]?.root;
       if (!gitUrl) {
         return vscode.window.showErrorMessage('Cannot find a git root');
@@ -157,13 +156,22 @@ function getDiffRepoPath(
   if (types.isVSCodeGit(context)) {
     const resourceUri = context.resourceStates?.[0]?.resourceUri;
     const workspaceUri = resourceUri
-      ? vscode.workspace.getWorkspaceFolder(resourceUri)
+      ? findGitRepoContaining(resourceUri) ||
+        vscode.workspace.getWorkspaceFolder(resourceUri)
       : vscode.workspace.workspaceFolders?.[0];
+
     return workspaceUri?.uri;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   vscode.window.showErrorMessage('Whole Diff cannot find a workspace folder');
+}
+
+function findGitRepoContaining(uri: vscode.Uri) {
+  const repo = gitExt?.exports.model.repositories.find(({ root }) =>
+    uri.path.startsWith(root)
+  );
+  return repo && { uri: vscode.Uri.parse(repo.root) };
 }
 
 function getDiffType(context: types.CommandContext): string | undefined {

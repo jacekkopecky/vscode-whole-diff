@@ -25,7 +25,8 @@ export class WholeDiffProvider implements vscode.TextDocumentContentProvider {
   }
 }
 
-let git: types.Git | undefined;
+export let git: types.Git | undefined;
+export let gitExt: vscode.Extension<types.GitExtension> | undefined;
 
 async function generateDiff(uri: vscode.Uri): Promise<string> {
   const cwd = path.dirname(uri.fsPath);
@@ -147,7 +148,6 @@ async function findGit(): Promise<types.Git> {
   if (git) return git;
 
   // check if vscode.git is available and if not, wait a bit
-  let gitExt: vscode.Extension<types.GitExtension> | undefined;
   for (let i = 0; i < 20; i += 1) {
     gitExt = vscode.extensions.all.find((ex) => ex.id === 'vscode.git');
     if (gitExt?.isActive) {
