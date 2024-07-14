@@ -3,9 +3,10 @@
 All notable changes to the "whole-diff" extension will be documented in this
 file.
 
-## [0.7.0] - 2024-07-14
+## [0.8.0] - 2024-07-14
 
 - improve support for git repositories in sub-folder of a workspace folder
+- skipped 0.7.0 because MS tools suck
 
 ## [0.6.0] - 2023-05-29
 
