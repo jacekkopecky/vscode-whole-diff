@@ -1,6 +1,9 @@
 {
     "root": true,
-    "extends": "portsoc-ts",
+    "extends": [
+        "portsoc-ts",
+        "prettier"
+    ],
     "ignorePatterns": [
         "out",
         "dist",

@@ -18,8 +18,7 @@ export class WholeDiffProvider implements vscode.TextDocumentContentProvider {
   // events, we fire an event every time the user requests a diff
   private _emitter = new vscode.EventEmitter<vscode.Uri>();
 
-  readonly onDidChange: vscode.Event<vscode.Uri> =
-    this._emitter.event;
+  readonly onDidChange: vscode.Event<vscode.Uri> = this._emitter.event;
 
   public fireChangeEvent(uri: vscode.Uri): void {
     this._emitter.fire(uri);
@@ -32,8 +31,12 @@ async function generateDiff(uri: vscode.Uri): Promise<string> {
   const cwd = path.dirname(uri.fsPath);
 
   if (!cwd) {
-    await vscode.window.showErrorMessage('Whole Diff cannot find a repository folder');
-    throw vscode.FileSystemError.Unavailable(`Whole Diff cannot find cwd for git for ${uri.fsPath}`);
+    await vscode.window.showErrorMessage(
+      'Whole Diff cannot find a repository folder'
+    );
+    throw vscode.FileSystemError.Unavailable(
+      `Whole Diff cannot find cwd for git for ${uri.fsPath}`
+    );
   }
 
   if (!git) {
@@ -55,7 +58,11 @@ function extractDiffArgs(uri: vscode.Uri): string[] {
   const diffType = path.basename(uri.path);
 
   const opts: string[] = [];
-  if (vscode.workspace.getConfiguration('diffEditor').get('ignoreTrimWhitespace') === true) {
+  if (
+    vscode.workspace
+      .getConfiguration('diffEditor')
+      .get('ignoreTrimWhitespace') === true
+  ) {
     opts.push('-b');
   }
 
@@ -68,13 +75,13 @@ function extractDiffArgs(uri: vscode.Uri): string[] {
     extractTwoRefsDiff(diffType, opts) ??
     extractWorkingTreeToRefDiff(diffType, opts) ??
     extractRefToWorkingTreeDiff(diffType, opts) ??
-    extractWorkingTreeAndRefDiff(diffType, opts)
-    ;
-
+    extractWorkingTreeAndRefDiff(diffType, opts);
   if (retval) {
     return retval;
   } else {
-    throw vscode.FileSystemError.FileNotFound(`Cannot find diff for ${diffType}`);
+    throw vscode.FileSystemError.FileNotFound(
+      `Cannot find diff for ${diffType}`
+    );
   }
 }
 
@@ -135,7 +142,6 @@ function extractWorkingTreeAndRefDiff(diffType: string, opts: string[]) {
     return ['diff', ...opts, decodeURIComponent(match)];
   }
 }
-
 
 async function findGit(): Promise<types.Git> {
   if (git) return git;

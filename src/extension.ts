@@ -7,7 +7,9 @@ export const FS_SCHEME = 'whole-diff-fs';
 class WholeDiffExtension {
   private diffProvider: WholeDiffProvider;
 
-  constructor(_diffProvider: WholeDiffProvider) { this.diffProvider = _diffProvider; }
+  constructor(_diffProvider: WholeDiffProvider) {
+    this.diffProvider = _diffProvider;
+  }
 
   showWholeDiffStaged = () => {
     return this.showWholeDiff({ id: 'index' });
@@ -21,7 +23,7 @@ class WholeDiffExtension {
     const diffPath = getDiffPath(context);
     if (!diffPath) {
       await vscode.window.showErrorMessage(
-        'Whole Diff is unclear on what to diff, where did you click it?',
+        'Whole Diff is unclear on what to diff, where did you click it?'
       );
       return;
     }
@@ -36,7 +38,7 @@ class WholeDiffExtension {
       await vscode.commands.executeCommand(
         'vscode.openWith',
         uri,
-        'diffViewer',
+        'diffViewer'
       );
       this.diffProvider.fireChangeEvent(uri);
     } catch (e) {
@@ -50,11 +52,19 @@ class WholeDiffExtension {
 
   doShowWholeDiffBySha = async (immediate?: boolean) => {
     const clipboardText = await vscode.env.clipboard.readText();
-    const clipboardSha = types.SHA_REGEX.test(clipboardText) ? clipboardText : '';
+    const clipboardSha = types.SHA_REGEX.test(clipboardText)
+      ? clipboardText
+      : '';
 
-    const shaInput = (immediate && clipboardSha)
-      ? clipboardSha
-      : (await vscode.window.showInputBox({ placeHolder: 'enter a commit SHA', value: clipboardSha }))?.trim();
+    const shaInput =
+      immediate && clipboardSha
+        ? clipboardSha
+        : (
+            await vscode.window.showInputBox({
+              placeHolder: 'enter a commit SHA',
+              value: clipboardSha,
+            })
+          )?.trim();
 
     if (!shaInput) return;
 
@@ -70,7 +80,9 @@ class WholeDiffExtension {
       const path = vscode.Uri.joinPath(vscode.Uri.parse(gitUrl), type).path;
       return this.openDiff(path);
     } else {
-      return vscode.window.showErrorMessage(`"${shaInput}" is not a recognized SHA`);
+      return vscode.window.showErrorMessage(
+        `"${shaInput}" is not a recognized SHA`
+      );
     }
   };
 
@@ -94,13 +106,19 @@ class WholeDiffExtension {
     if (context) return context;
 
     const activeInput = vscode.window.tabGroups.activeTabGroup.activeTab?.input;
-    if (activeInput && typeof activeInput === 'object' && ('uri' in activeInput)) {
+    if (
+      activeInput &&
+      typeof activeInput === 'object' &&
+      'uri' in activeInput
+    ) {
       return activeInput.uri;
     }
   };
 
   toggleIgnoreWhitespace = async (context: unknown, value: boolean) => {
-    await vscode.workspace.getConfiguration('diffEditor').update('ignoreTrimWhitespace', value, true);
+    await vscode.workspace
+      .getConfiguration('diffEditor')
+      .update('ignoreTrimWhitespace', value, true);
 
     const uri = this.getContextOrActiveTabUri(context);
     if (uri instanceof vscode.Uri && uri.scheme === FS_SCHEME) {
@@ -108,8 +126,11 @@ class WholeDiffExtension {
     }
   };
 
-  showWhitespace = (context: unknown) => this.toggleIgnoreWhitespace(context, false);
-  ignoreWhitespace = (context: unknown) => this.toggleIgnoreWhitespace(context, true);
+  showWhitespace = (context: unknown) =>
+    this.toggleIgnoreWhitespace(context, false);
+
+  ignoreWhitespace = (context: unknown) =>
+    this.toggleIgnoreWhitespace(context, true);
 }
 
 function getDiffPath(context: types.CommandContext): string | undefined {
@@ -122,7 +143,9 @@ function getDiffPath(context: types.CommandContext): string | undefined {
   return vscode.Uri.joinPath(repo, type).path;
 }
 
-function getDiffRepoPath(context: types.CommandContext): vscode.Uri | undefined {
+function getDiffRepoPath(
+  context: types.CommandContext
+): vscode.Uri | undefined {
   if (types.isGitLensCommitBase(context)) {
     if (context.repoPath) {
       return vscode.Uri.from({ ...context.uri, path: context.repoPath });
@@ -163,21 +186,27 @@ function getDiffType(context: types.CommandContext): string | undefined {
   }
 
   if (types.isGitLensBranch(context)) {
-    return 'HEAD...' + encodeURIComponent(context.branch.name) + types.DIFF_POSTFIX;
+    return (
+      'HEAD...' + encodeURIComponent(context.branch.name) + types.DIFF_POSTFIX
+    );
   }
 
   if (types.isGitLensCompare(context)) {
-    return encodeURIComponent(context.behind.ref1) +
-           '..' +
-           encodeURIComponent(context.behind.ref2) +
-           types.DIFF_POSTFIX;
+    return (
+      encodeURIComponent(context.behind.ref1) +
+      '..' +
+      encodeURIComponent(context.behind.ref2) +
+      types.DIFF_POSTFIX
+    );
   }
 
   if (types.isGitLensCompareDirection(context)) {
-    return encodeURIComponent(context.ref1) +
-           '...' +
-           encodeURIComponent(context.ref2) +
-           types.DIFF_POSTFIX;
+    return (
+      encodeURIComponent(context.ref1) +
+      '...' +
+      encodeURIComponent(context.ref2) +
+      types.DIFF_POSTFIX
+    );
   }
 
   return undefined;
@@ -187,6 +216,7 @@ export function activate(context: vscode.ExtensionContext): void {
   const diffProvider = new WholeDiffProvider();
   const ext = new WholeDiffExtension(diffProvider);
 
+  // prettier-ignore
   context.subscriptions.push(
     vscode.commands.registerCommand('whole-diff.showWholeDiff', ext.showWholeDiff),
     vscode.commands.registerCommand('whole-diff.showWholeDiffBySha', ext.showWholeDiffBySha),
@@ -199,6 +229,9 @@ export function activate(context: vscode.ExtensionContext): void {
   );
 
   context.subscriptions.push(
-    vscode.workspace.registerTextDocumentContentProvider(FS_SCHEME, diffProvider),
+    vscode.workspace.registerTextDocumentContentProvider(
+      FS_SCHEME,
+      diffProvider
+    )
   );
 }

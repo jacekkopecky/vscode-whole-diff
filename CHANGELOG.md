@@ -5,15 +5,19 @@ file.
 
 ## [0.6.0] - 2023-05-29
 
-- add a command "Show whole diff for a given SHA" with id whole-diff.showWholeDiffBySha
+- add a command "Show whole diff for a given SHA" with id
+  whole-diff.showWholeDiffBySha
   - the command lets you input the SHA
   - if there is a SHA in the clipboard, it will be the default value
 - add a command whole-diff.showWholeDiffByShaImmediate like the above
-  - but if there is a SHA in the clipboard, it opens the diff immediately without asking for a SHA
+  - but if there is a SHA in the clipboard, it opens the diff immediately
+    without asking for a SHA
 - add the whole diff icon to Git Graph extension windows
 - 0.6.1 fixes behaviour on GitLens comparisons with working tree
-- 0.6.2 makes the tab button commands available in the command pallette and for keyboard shortcuts
-  - this applies to `whole-diff.refreshWholeDiff`, `whole-diff.showWhitespace` and `whole-diff.ignoreWhitespace`
+- 0.6.2 makes the tab button commands available in the command pallette and for
+  keyboard shortcuts
+  - this applies to `whole-diff.refreshWholeDiff`, `whole-diff.showWhitespace`
+    and `whole-diff.ignoreWhitespace`
 
 ## [0.5.0] - 2023-01-14
 
