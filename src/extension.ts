@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { WholeDiffProvider, gitExt } from './whole-diff-provider';
+import { WholeDiffProvider, findGit, gitExt } from './whole-diff-provider';
 import * as types from './types';
 
 export const FS_SCHEME = 'whole-diff-fs';
@@ -20,7 +20,7 @@ class WholeDiffExtension {
   };
 
   showWholeDiff = async (context: types.CommandContext) => {
-    const diffPath = getDiffPath(context);
+    const diffPath = await getDiffPath(context);
     if (!diffPath) {
       await vscode.window.showErrorMessage(
         'Whole Diff is unclear on what to diff, where did you click it?'
@@ -132,19 +132,21 @@ class WholeDiffExtension {
     this.toggleIgnoreWhitespace(context, true);
 }
 
-function getDiffPath(context: types.CommandContext): string | undefined {
+async function getDiffPath(
+  context: types.CommandContext
+): Promise<string | undefined> {
   const type = getDiffType(context);
   if (!type) return;
 
-  const repo = getDiffRepoPath(context);
+  const repo = await getDiffRepoPath(context);
   if (!repo) return;
 
   return vscode.Uri.joinPath(repo, type).path;
 }
 
-function getDiffRepoPath(
+async function getDiffRepoPath(
   context: types.CommandContext
-): vscode.Uri | undefined {
+): Promise<vscode.Uri | undefined> {
   if (types.isGitLensCommitBase(context)) {
     if (context.repoPath) {
       return vscode.Uri.from({ ...context.uri, path: context.repoPath });
@@ -156,7 +158,7 @@ function getDiffRepoPath(
   if (types.isVSCodeGit(context)) {
     const resourceUri = context.resourceStates?.[0]?.resourceUri;
     const workspaceUri = resourceUri
-      ? findGitRepoContaining(resourceUri) ||
+      ? (await findGitRepoContaining(resourceUri)) ||
         vscode.workspace.getWorkspaceFolder(resourceUri)
       : vscode.workspace.workspaceFolders?.[0];
 
@@ -167,9 +169,10 @@ function getDiffRepoPath(
   vscode.window.showErrorMessage('Whole Diff cannot find a workspace folder');
 }
 
-function findGitRepoContaining(uri: vscode.Uri) {
+async function findGitRepoContaining(uri: vscode.Uri) {
+  if (!gitExt) await findGit();
   const repo = gitExt?.exports.model.repositories.find(({ root }) =>
-    uri.path.startsWith(root)
+    uri.fsPath.startsWith(root)
   );
   return repo && { uri: vscode.Uri.parse(repo.root) };
 }

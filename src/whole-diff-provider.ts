@@ -144,7 +144,7 @@ function extractWorkingTreeAndRefDiff(diffType: string, opts: string[]) {
   }
 }
 
-async function findGit(): Promise<types.Git> {
+export async function findGit(): Promise<types.Git> {
   if (git) return git;
 
   // check if vscode.git is available and if not, wait a bit
