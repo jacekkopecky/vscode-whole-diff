@@ -7,6 +7,7 @@ file.
 
 - improve support for git repositories in sub-folder of a workspace folder
 - skipped 0.7.0 because MS tools suck
+- 0.8.1, 0.8.2 trying to fix Windows behaviours
 
 ## [0.6.0] - 2023-05-29
 

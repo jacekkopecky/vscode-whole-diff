@@ -174,7 +174,7 @@ async function findGitRepoContaining(uri: vscode.Uri) {
   const repo = gitExt?.exports.model.repositories.find(({ root }) =>
     uri.fsPath.startsWith(root)
   );
-  return repo && { uri: vscode.Uri.parse(repo.root) };
+  return repo && { uri: vscode.Uri.file(repo.root) };
 }
 
 function getDiffType(context: types.CommandContext): string | undefined {
