@@ -2,7 +2,7 @@
 
 This extension makes it possible to view the whole diff for working tree
 changes, staged changes, or a specific commit or stash (in GitLens
-commits/shashes lists).
+commits/shashes lists, if you have GitLens installed).
 
 ## Features
 
@@ -11,7 +11,7 @@ will open a diff that shows all the changes in a single diff file.
 
 ![Whole Diff buttons](images/buttons-screenshot.png)
 
-The same icon is also added to GitLens Commits, Stashes, and Branches lists,
+If you have GitLens installed, the same icon is also added to GitLens Commits, Stashes, and Branches lists,
 where it opens the diff for that commit, stash, or the whole branch (from the
 common ancestor with HEAD). It's also there when you compare two commits.
 
